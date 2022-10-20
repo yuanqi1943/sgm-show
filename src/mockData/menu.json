@@ -1,0 +1,48 @@
+{
+    "data": [
+        {
+            "name": "index",
+            "label": "首页",
+            "permission": ["dashboard_view"],
+            "meta":{},
+            "children": [
+                {
+                    "name": "dashboard",
+                    "path": "/dashboard",
+                    "label": "dashboard",
+                    "permission": ["dashboard_view"],
+                    "meta":{}
+                }
+            ]
+        },
+        {
+            "name": "drivingBehavior",
+            "label": "驾驶行为",
+            "permission": ["driven_distance_view","driving_time_view","driving_speed_view"],
+            "meta":{},
+            "children": [
+                {
+                    "name": "driven distance",
+                    "path": "/drivingBehavior/drivenDistance/index",
+                    "label": "行驶里程",
+                    "permission": ["driven_distance_view"],
+                    "meta":{}
+                },
+                {
+                    "name": "driving time",
+                    "path": "/drivingBehavior/drivingTime/index",
+                    "label": "行驶时间",
+                    "permission": ["driving_time_view"],
+                    "meta":{}
+                },
+                {
+                    "name": "driving speed",
+                    "path": "/drivingBehavior/drivingSpeed/index",
+                    "label": "行驶速度",
+                    "permission": ["driving_speed_view"],
+                    "meta":{}
+                }
+            ]
+        }
+    ]
+}
