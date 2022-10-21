@@ -4,14 +4,24 @@
     :style="`height: ${cardInfo.height ? cardInfo.height: 430}px;`"
   >
     <div class="charts-title">
-      <div class="title">{{ cardInfo.title }}</div>
-      <el-tooltip class="item" effect="light" :content="cardInfo.definition.content" placement="bottom-start">
-        <img class="mgl-s" :src="img1">
-      </el-tooltip>
+      <div>
+        <div class="title">{{ cardInfo.title }}</div>
+        <el-popover class="description-info" placement="bottom-start" width="358" trigger="hover">
+          <div>
+            <p class="mgb-l"><strong class="info-title">指标业务定义:</strong>{{cardInfo.definition}}</p>
+            <p><strong class="info-title">横轴取值范围:</strong>{{cardInfo.range}}</p>
+          </div>
+          <img slot="reference" class="info-icon" :src="img1">
+        </el-popover>
+      </div>
+      <div class="info-right">
+        <span>数据量:{{cardInfo.dataTotal}};</span>
+        <span class="mgl-s">数据覆盖率:{{cardInfo.coverRate}}</span>
+      </div>
     </div>
     <!-- charts components -->
     <div class="chart-box" style="width:100%;height:calc(100% - 50px)">
-      <div class="sub-title">{{cardInfo.subTitle}}</div>
+      <div class="sub-title">{{viewType?cardInfo.subTitlePercent:cardInfo.subTitleNum}}</div>
       <slot class="chart" name="chart"/>
     </div>
   </div>
@@ -24,6 +34,11 @@ export default {
     // 卡片信息
     cardInfo: {
       type: Object,
+      required: true,
+    },
+    //展示方式
+    viewType:{
+      type: Boolean,
       required: true,
     },
   },
@@ -47,9 +62,11 @@ export default {
     display: flex;
     align-items: center;
     padding-left: 32px;
+    justify-content: space-between;
     .title {
       font-weight: 700;
       position: relative;
+      display: inline-block;
     }
     .title::before {
       content: " ";
@@ -60,6 +77,15 @@ export default {
       width: 8px;
       border-radius: 8px;
       border: 2px solid #0c1243;
+    }
+    .info-icon{
+      vertical-align:top;
+      margin-left: 5px;
+    }
+    .info-right{
+      font-size: 14px;
+      color: #aaa;
+      padding-right: 20px;
     }
   }
   .chart-box{

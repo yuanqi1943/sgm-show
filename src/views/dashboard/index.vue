@@ -18,17 +18,12 @@
       <div>
         <section class="flex">
           <div><img :src="img1"></div>
-          <charts-card :cardInfo="cardOotion1"/>
         </section>
         <section class="flex">
           <div>
             <div class="flex">
-              <charts-card :cardInfo="cardOotion1"/>
-              <charts-card :cardInfo="cardOotion1"/>
             </div>
             <div class="flex">
-             <charts-card :cardInfo="cardOotion1"/>
-             <charts-card :cardInfo="cardOotion1"/>
             </div>
           </div>
           <table></table>
@@ -39,11 +34,10 @@
 </template>
 
 <script>
-import chartsCard from '@/components/chartsCard.vue'
+// import chartsCard from '@/components/chartsCard.vue'
 export default {
   name: "dash-board",
   components: {
-    chartsCard
   },
   data() {
     return {

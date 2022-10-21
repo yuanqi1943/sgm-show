@@ -1,19 +1,21 @@
 <template>
   <div class="flex" style="width:100%">
-    <el-tabs class="sidebar-menu" type="card" tab-position="left" v-model="activeName" @tab-click="handleClick">
+    <el-tabs class="sidebar-menu" type="card" tab-position="left" v-model="activeName">
       <el-tab-pane v-for="item in childMenuData" :key="item.index" :label="item.title" :name="item.index"></el-tab-pane>
     </el-tabs>
     <div class="app-main">
       <div class="form-box">
         <filter-from :activeName='activeName' @generateEchart='generateEchart'/>
-        <el-radio-group class="view-type" v-model="viewType" @change="changeViewType">
-          <el-radio label="percent">显示百分比</el-radio>
-          <el-radio label="number">显示数量</el-radio>
+        <el-radio-group class="view-type" v-model="viewType">
+          <el-radio :label="true">显示百分比</el-radio>
+          <el-radio :label="false">显示数量</el-radio>
         </el-radio-group>
       </div>
-      <driven-distance ref="drivenDistance" v-if="activeName=='drivenDistance'" :viewType="viewType"/>
-      <driving-time ref="drivingTime" v-if="activeName=='drivingTime'" :viewType="viewType"/>
-      <driving-speed v-if="activeName=='drivingSpeed'" :viewType="viewType"/>
+      <div v-if="isMounted">
+        <driven-distance ref="drivenDistance" v-show="activeName=='drivenDistance'" :viewType="viewType"/>
+        <driving-time ref="drivingTime" v-if="activeName=='drivingTime'" :viewType="viewType"/>
+        <driving-speed v-if="activeName=='drivingSpeed'" :viewType="viewType"/>
+      </div>
     </div>
 
   </div>
@@ -36,11 +38,13 @@ export default {
     return{
       childMenuData:[],
       activeName:'',
-      viewType:'percent'
+      viewType:true,
+      isMounted:false,
     }
   },
   mounted(){
     this.getChildMenuData()
+    this.isMounted = true
   },
   methods:{
     getChildMenuData(){
@@ -61,12 +65,6 @@ export default {
     generateEchart(formData){
       this.$refs[this.activeName].generateEchart(formData)
     },
-    changeViewType(){
-
-    },
-    handleClick(){
-
-    }
   }
 };
 </script>
@@ -88,6 +86,7 @@ export default {
     }
     .button-box{
       padding-top: 24px;
+      width: 260px;
     }
     .view-type{
       padding-top: 10px;
