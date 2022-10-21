@@ -318,7 +318,12 @@
           {
             name: '出行次数',
             type: 'bar',
-            barWidth:'40%',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
             data:this.viewType?this.drivenDistance3.seriesPercentData:this.drivenDistance3.seriesNumData,
             label: {
               show: true,
@@ -354,7 +359,12 @@
           {
             name: '车辆数量',
             type: 'bar',
-            barWidth:'40%',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
             data:this.viewType?this.drivenDistance4.seriesPercentData:this.drivenDistance4.seriesNumData,
             label: {
               show: true,
@@ -390,7 +400,12 @@
           {
             name: '车辆数量',
             type: 'bar',
-            barWidth:'40%',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
             data:this.viewType?this.drivenDistance5.seriesPercentData:this.drivenDistance5.seriesNumData,
             label: {
               show: true,

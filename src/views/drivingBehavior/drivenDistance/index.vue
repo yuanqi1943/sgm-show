@@ -256,7 +256,12 @@
             {
               name: '出行次数',
               type: 'bar',
-              barWidth:'40%',
+              barWidth:'20',
+              itemStyle: {
+                normal: {
+                    color:'#3893F9'
+                }
+              },
               data:this.viewType?this.drivenDistance1.seriesPercentData:this.drivenDistance1.seriesNumData,
               label: {
                 show: true,
@@ -292,7 +297,12 @@
             {
               name: '出行次数',
               type: 'bar',
-              barWidth:'40%',
+              barWidth:'20',
+              itemStyle: {
+                normal: {
+                    color:'#3893F9'
+                }
+              },
               data:this.viewType?this.drivenDistance2.seriesPercentData:this.drivenDistance2.seriesNumData,
               label: {
                 show: true,
@@ -334,7 +344,15 @@
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              areaStyle:{},
+              itemStyle: {
+                normal: {
+                    color:'#2BB896'
+                }
+              },
+              areaStyle:{
+                color:'#81D82B',
+                opacity:0.1,
+              },
             }
           ]
         myChart.setOption(chartOption);
@@ -572,7 +590,12 @@
             {
               name: '车辆数',
               type: 'bar',
-              barWidth:'40%',
+              barWidth:'20',
+              itemStyle: {
+                normal: {
+                    color:'#3893F9'
+                }
+              },
               data:this.viewType?this.drivenDistance7.seriesPercentData:this.drivenDistance7.seriesNumData,
               label: {
                 show: true,
