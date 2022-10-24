@@ -37,18 +37,18 @@ export const constantRoutes = [
         component: () => import('@/views/drivingBehavior/index'),
       },
       {
-        path: 'userPortrait',
+        path: '/userPortrait',
         component: () => import('@/views/userPortrait/index'),
         name: 'UserPortrait',
         meta: { title: 'UserPortrait', icon: 'userPortrait' }
       },
       {
-        path: 'chargeFeature',
+        path: '/chargeFeature',
         component: () => import('@/views/chargeFeature/index'),
         name: 'ChargeFeature',
       },
       {
-        path: 'thermoPicture',
+        path: '/thermoPicture',
         component: () => import('@/views/thermoPicture/index'),
         name: 'thermoPicture',
       },
