@@ -1,6 +1,9 @@
 import Vue from 'vue';
 
 /**
+ * 引入 axios
+ */
+/**
  * 引入element-ui
  */
 import ElementUI from 'element-ui';
@@ -23,6 +26,7 @@ import App from './App.vue';
  * 引入路由配置
  */
 import router from './router'
+
 
 Vue.use(ElementUI, {
   // size: Cookies.get('size') || 'medium', // set element-ui default size

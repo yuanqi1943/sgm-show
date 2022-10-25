@@ -50,6 +50,7 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
+  import {getAverageMileageDistribution} from '@/api/drivingBehavior'
   export default {
     name: 'drivenDistance',
     components:{
@@ -233,7 +234,7 @@
         })
       },
       getDrivenDistanceData1(){
-        this.getDataFuntion().then((res)=>{
+        getAverageMileageDistribution().then((res)=>{
           this.drivenDistance1.seriesNumData = [590, 820, 950, 1100, 1190, 810, 680, 495, 460, 360, 300, 130, 90, 40, 30]
           this.drivenDistance1.seriesPercentData = [6,10,13,14,15,10,8,7,6,4,3,2,1,1,1]
           this.generateChartDrivenDistance1()
