@@ -199,31 +199,13 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
-        chartOption.visualMap = {
-          type: 'piecewise',
-          show: false,
-          dimension: 0,
-          seriesIndex: 0,
-          pieces: [
-            {
-              gt: 5,
-              lt: 10,
-              color:'rgba(56, 147, 249, 0.4)'
-            },
-            {
-              gt: 18,
-              lt: 22,
-              color:'rgba(56, 147, 249, 0.4)'
-            }
-          ]
-        },
         chartOption.series = [
             {
               name: '车辆数量',
               type: 'line',
               step: 'end',
               lineStyle: {
-                color: '#5470C6',
+                color: '#3893F9',
                 width: 2
               },
               symbol: 'none',
@@ -233,7 +215,17 @@
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              areaStyle:{},
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  opacity: 0.3,
+                  color:'#3893F9',
+                },
+                data: [
+                  [{xAxis:'6:00'},{xAxis:'14:00'}],
+                  [{xAxis:'18:00'},{xAxis:'22:00'}]
+                ]
+              },
             }
         ]
         myChart.setOption(chartOption);
@@ -259,26 +251,13 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
-        chartOption.visualMap = {
-          type: 'piecewise',
-          show: false,
-          dimension: 0,
-          seriesIndex: 0,
-          pieces: [
-            {
-              gt: 0,
-              lt: 4,
-              color:'rgba(56, 147, 249, 0.4)'
-            },
-          ]
-        },
         chartOption.series = [
             {
               name: '车辆数量',
               type: 'line',
               step: 'end',
               lineStyle: {
-                color: '#5470C6',
+                color: '#3893F9',
                 width: 2
               },
               symbol: 'none',
@@ -288,7 +267,17 @@
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              areaStyle:{},
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  opacity: 0.3,
+                  color:'#3893F9',
+                },
+                data: [
+                  [{xAxis:'0:00'},{xAxis:'4:00'}],
+                  [{xAxis:'18:00'},{xAxis:'22:00'}]
+                ]
+              },
             }
         ]
         myChart.setOption(chartOption);

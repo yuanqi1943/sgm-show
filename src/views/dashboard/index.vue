@@ -12,8 +12,6 @@
         >
         </el-date-picker>
         <i class="el-icon-date data_icon"></i>
-        <el-button @click="selectBaseInfoListTree">selectBaseInfoListTree</el-button>
-        <el-button @click="getDictionaryList">getDictionaryList</el-button>
       </div>
     </header>
     <main class="page-content">
@@ -37,7 +35,6 @@
 
 <script>
 // import chartsCard from '@/components/chartsCard.vue'
-import { selectBaseInfoListTree, getDictionaryList } from '@/api/dictionary'
 export default {
   name: "dash-board",
   components: {
@@ -52,16 +49,7 @@ export default {
     };
   },
   methods:{
-    selectBaseInfoListTree(){
-      selectBaseInfoListTree().then(res=>{
-        console.log(res)
-      })
-    },
-    getDictionaryList(){
-      getDictionaryList().then(res=>{
-        console.log(res)
-      })
-    }
+   
   }
 };
 </script>

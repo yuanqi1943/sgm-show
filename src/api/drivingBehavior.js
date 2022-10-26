@@ -161,6 +161,8 @@ export function selectMonthlyAccumulatedMileage(query) {
     params: query
   })
 }
+
+//百公里耗电
 export function selectPowerConsumptionHundred(query) {
   return request({
     url: '/sgm/api/drive/selectPowerConsumptionHundred',
@@ -168,6 +170,8 @@ export function selectPowerConsumptionHundred(query) {
     params: query
   })
 }
+
+//每百公里耗电
 export function selectPowerConsumptionPerHundred(query) {
   return request({
     url: '/sgm/api/drive/selectPowerConsumptionPerHundred',
@@ -175,6 +179,8 @@ export function selectPowerConsumptionPerHundred(query) {
     params: query
   })
 }
+
+//居住和最远充电距离
 export function selectResidenceAndFarthestChargingDistance(query) {
   return request({
     url: '/sgm/api/drive/selectResidenceAndFarthestChargingDistance',
@@ -182,6 +188,8 @@ export function selectResidenceAndFarthestChargingDistance(query) {
     params: query
   })
 }
+
+//二驱SOC分布
 export function selectSOCDistributionOfTheSecondDrive(query) {
   return request({
     url: '/sgm/api/drive/selectSOCDistributionOfTheSecondDrive',
@@ -189,6 +197,8 @@ export function selectSOCDistributionOfTheSecondDrive(query) {
     params: query
   })
 }
+
+//单次充电里程
 export function selectSingleChargeMileage(query) {
   return request({
     url: '/sgm/api/drive/selectSingleChargeMileage',
@@ -196,6 +206,8 @@ export function selectSingleChargeMileage(query) {
     params: query
   })
 }
+
+//单次驾驶时间
 export function selectSingleDrivingDuration(query) {
   return request({
     url: '/sgm/api/drive/selectSingleDrivingDuration',
@@ -203,6 +215,8 @@ export function selectSingleDrivingDuration(query) {
     params: query
   })
 }
+
+//热力学分布
 export function selectThermodynamicDistribution(query) {
   return request({
     url: '/sgm/api/drive/selectThermodynamicDistribution',
@@ -210,6 +224,8 @@ export function selectThermodynamicDistribution(query) {
     params: query
   })
 }
+
+//旅行时间
 export function selectTravelTime(query) {
   return request({
     url: '/sgm/api/drive/selectTravelTime',

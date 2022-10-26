@@ -233,8 +233,6 @@
         this.generateChartDrivenDistance5()
         this.generateChartDrivenDistance6()
         this.generateChartDrivenDistance7()
-        this.generateChartDrivenDistance8()
-        this.generateChartDrivenDistance9()
       }
     },
     methods:{
@@ -247,8 +245,6 @@
           this.generateChartDrivenDistance5()
           this.generateChartDrivenDistance6()
           this.generateChartDrivenDistance7()
-          this.generateChartDrivenDistance8()
-          this.generateChartDrivenDistance9()
         })
       },
       generateEchart(){
@@ -259,8 +255,6 @@
         this.getDrivenDistanceData5()
         this.getDrivenDistanceData6()
         this.getDrivenDistanceData7()
-        this.getDrivenDistanceData8()
-        this.getDrivenDistanceData9()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {

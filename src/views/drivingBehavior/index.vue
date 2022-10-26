@@ -14,7 +14,9 @@
       <div v-if="isMounted">
         <driven-distance ref="drivenDistance" v-show="activeName=='drivenDistance'" :viewType="viewType"/>
         <driving-time ref="drivingTime" v-if="activeName=='drivingTime'" :viewType="viewType"/>
-        <driving-speed v-if="activeName=='drivingSpeed'" :viewType="viewType"/>
+        <driving-speed ref="drivingSpeed" v-if="activeName=='drivingSpeed'" :viewType="viewType"/>
+        <driving-energy ref="drivingEnergy" v-if="activeName=='drivingEnergy'" :viewType="viewType"/>
+        <vehicle-behavior ref="vehicleBehavior" v-if="activeName=='vehicleBehavior'" :viewType="viewType"/>
       </div>
     </div>
 
@@ -26,13 +28,17 @@ import FilterFrom from './FilterFrom.vue'
 import DrivenDistance from './drivenDistance/index.vue'
 import DrivingTime from './drivingTime/index.vue'
 import DrivingSpeed from './drivingSpeed/index.vue'
+import DrivingEnergy from './drivingEnergy/index.vue'
+import VehicleBehavior from './vehicleBehavior/index.vue'
 export default {
   name: 'drivingBehavior',
   components: {
     FilterFrom,
     DrivenDistance,
     DrivingTime,
-    DrivingSpeed
+    DrivingSpeed,
+    DrivingEnergy,
+    VehicleBehavior
   },
   data(){
     return{
@@ -52,7 +58,7 @@ export default {
         {index:'drivenDistance',title:'行驶里程'},
         {index:'drivingTime',title:'行驶时间'},
         {index:'drivingSpeed',title:'行驶速度'},
-        {index:'drivingConsumption',title:'行驶能耗'},
+        {index:'drivingEnergy',title:'行驶能耗'},
         {index:'vehicleBehavior',title:'车辆行为'},
       ]
       this.$nextTick(()=>{

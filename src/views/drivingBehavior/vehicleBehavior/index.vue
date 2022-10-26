@@ -1,12 +1,12 @@
 <template>
   <div class="echart-box">
     <el-row :gutter="20" class="pdl-s pdr-s">
-      <el-col class="" :span="12">
+      <el-col class="" :span="6">
         <charts-card :cardInfo="drivenDistance1" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driven-distance-1" id="chart-driven-distance-1"></div>
         </charts-card>  
       </el-col>
-      <el-col class="" :span="12">
+      <el-col class="" :span="18">
         <charts-card :cardInfo="drivenDistance2" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driven-distance-2" id="chart-driven-distance-2"></div>
         </charts-card>  
@@ -93,7 +93,7 @@
           ]
         },
         drivenDistance1:{
-          xAxisData:['0-5', '5-10', '10-15', '15-20', '20-25', '25-30','30-35','35-40','40-45','45-50','50-55','55-60','60-65','65-70','70及以上'],
+          xAxisData:['0-5', '5-10', '10-15', '15-20', '20-25'],
           seriesNumData:[],
           seriesPercentData:[],
           title:'次均行驶里程分布',
