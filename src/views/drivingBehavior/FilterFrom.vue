@@ -53,7 +53,7 @@
       </el-form-item>  
     </el-form>
     <div class="button-box">
-        <el-button type="primary" @click="generateEchart">搜索</el-button>
+        <el-button type="primary" @click="generateEchart">查询</el-button>
         <el-button type="default" >重置</el-button>
     </div>
     <!-- <br />
