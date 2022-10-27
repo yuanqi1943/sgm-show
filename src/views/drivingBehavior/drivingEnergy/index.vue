@@ -2,15 +2,15 @@
   <div class="echart-box">
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
-        <charts-card :cardInfo="drivenDistance6" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-6" id="chart-driven-distance-6"></div>
+        <charts-card :cardInfo="drivingEnergy1" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-driving-energy-1" id="chart-driving-energy-1"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
-        <charts-card :cardInfo="drivenDistance7" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-7" id="chart-driven-distance-7"></div>
+        <charts-card :cardInfo="drivingEnergy2" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-driving-energy-2" id="chart-driving-energy-2"></div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -19,10 +19,9 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
-  import {getAverageMileageDistribution, selectAverageDailyMileage, selectDailyAccumulatedMileage, 
-  selectMonthlyAccumulatedMileage, selectSingleChargeMileage, selectAnnualMaximumMileage} from '@/api/drivingBehavior'
+  import {selectSOCDistributionOfTheSecondDrive, selectPowerConsumptionPerHundred} from '@/api/drivingBehavior'
   export default {
-    name: 'drivenDistance',
+    name: 'drivingEnergy',
     components:{
       ChartsCard
     },
@@ -44,7 +43,7 @@
           tooltip: {},
           grid:{
             left:50,
-            right:50
+            right:50,
           },
           xAxis: {
             data: []
@@ -61,7 +60,7 @@
             }
           ]
         },
-        drivenDistance6:{
+        drivingEnergy1:{
           xAxisData:['8-10', '10-12','12-14', '14-16','16-18', '18-20','20-22', '22-24','24-26', '26及以上'],
           seriesNumData1: [],
           seriesNumData2: [],
@@ -76,7 +75,7 @@
           coverRate:'92%',
           dataTotal:'45961',
         },
-        drivenDistance7:{
+        drivingEnergy2:{
           xAxisData:['8-10', '10-12','12-14', '14-16','16-18', '18-20','20-22', '22-24','24-26', '26及以上'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -99,20 +98,20 @@
     },
     watch:{
       viewType(newVal){
-        this.generateChartDrivenDistance6()
-        this.generateChartDrivenDistance7()
+        this.generateChartDrivenDistance1()
+        this.generateChartDrivenDistance2()
       }
     },
     methods:{
       generateEmptyEchart(){
         this.$nextTick(()=>{
-          this.generateChartDrivenDistance6()
-          this.generateChartDrivenDistance7()
+          this.generateChartDrivenDistance1()
+          this.generateChartDrivenDistance2()
         })
       },
       generateEchart(){
-        this.getDrivenDistanceData6()
-        this.getDrivenDistanceData7()
+        this.getDrivenDistanceData1()
+        this.getDrivenDistanceData2()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
@@ -121,128 +120,135 @@
       },
 
       //次行驶SOC分布
-      getDrivenDistanceData6(){
-        selectAnnualMaximumMileage().then((res)=>{
-          console.log(res)
+      getDrivenDistanceData1(){
+        selectSOCDistributionOfTheSecondDrive().then((res)=>{
+          this.drivingEnergy1.seriesNumData1 = res.data.data.yStartValueDataList
+          this.drivingEnergy1.seriesPercentData1 = res.data.data.yStartPropDataList
+          this.drivingEnergy1.seriesNumData2 = res.data.data.yEndValueDataList
+          this.drivingEnergy1.seriesPercentData2 = res.data.data.yEndPropDataList
         }).finally(()=>{
-          if(this.drivenDistance6.seriesNumData1.length==0){
-            this.drivenDistance6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
-            this.drivenDistance6.seriesNumData2 = [1, 10, 180, 410, 450, 520, 440, 380, 190, 180, 120, 80, 50]
-            this.drivenDistance6.seriesPercentData1 = [0, 1, 2, 5, 9, 12, 14, 18, 16, 12, 10, 4, 1]
-            this.drivenDistance6.seriesPercentData2 = [0, 1, 3, 6, 8, 14, 16, 20, 17, 13, 9, 1, 1]
+          if(this.drivingEnergy1.seriesNumData1.length==0){
+            this.drivingEnergy1.seriesNumData1 = [40,110,80,50,30,20,10,10,10,10]
+            this.drivingEnergy1.seriesNumData2 = [60,90,80,70,50,40,30,20,10,10]
+            this.drivingEnergy1.seriesPercentData1 = [4,11,8,5,3,2,1,1,1,1]
+            this.drivingEnergy1.seriesPercentData2 = [6,9,8,7,5,4,3,2,1,1]
           }
-          this.generateChartDrivenDistance6()
+          this.generateChartDrivenDistance1()
         })
       },
-      generateChartDrivenDistance6(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-6']);
+      generateChartDrivenDistance1(){
+        var myChart = this.$echarts.init(this.$refs['chart-driving-energy-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance6.chartTitle
+        chartOption.title.text = this.drivingEnergy1.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance6.xAxisData,
+          data:this.drivingEnergy1.xAxisData,
           axisLabel:{interval:'0'},
-          type: 'category',
         }
         chartOption.yAxis = {
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
-          name: this.viewType?'':'(单位:百辆)',
-          type: 'value'
+          name: this.viewType?'':'(单位:百次)',
         }
         chartOption.legend = {
-          data: ['次行驶起始SOC', '次行驶结束SOC']
+          data: ['次行驶起始SOC', '次行驶结束SOC',]
         },
         chartOption.series = [
-            {
-              name: '次行驶起始SOC',
-              type: 'line',
-              data:this.viewType?this.drivenDistance6.seriesPercentData1:this.drivenDistance6.seriesNumData1,
-              lineStyle:{
+          {
+            name: '次行驶起始SOC',
+            type: 'line',
+            data:this.viewType?this.drivingEnergy1.seriesPercentData1:this.drivingEnergy1.seriesNumData1,
+            lineStyle:{
+              color:'#3893F9'
+            },
+            itemStyle : {
+              normal : {
                 color:'#3893F9'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#3893F9'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8',
-              areaStyle: {
-                opacity: 0.5,
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [{
-                      offset: 0, color: '#3893F9' // 0% 处的颜色
-                  }, {
-                      offset: 1, color: '#fff' // 100% 处的颜色
-                  }],
-                  global: false
-                }
-              },
+              }
             },
-            {
-              name: '次行驶结束SOC',
-              type: 'line',
-              data:this.viewType?this.drivenDistance6.seriesPercentData2:this.drivenDistance6.seriesNumData2,
-              lineStyle:{
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#3893F9' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+          {
+            name: '次行驶结束SOC',
+            type: 'line',
+            data:this.viewType?this.drivingEnergy1.seriesPercentData2:this.drivingEnergy1.seriesNumData2,
+            lineStyle:{
+              color:'#81D82B'
+            },
+            itemStyle : {
+              normal : {
                 color:'#81D82B'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#81D82B'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8',
-              areaStyle: {
-                opacity: 0.5,
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [{
-                      offset: 0, color: '#81D82B' // 0% 处的颜色
-                  }, {
-                      offset: 1, color: '#fff' // 100% 处的颜色
-                  }],
-                  global: false
-                }
-              },
+              }
             },
-          ]
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#81D82B' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+        ]
         myChart.setOption(chartOption);
       },
 
       //次驾驶百公里电耗分布
-      getDrivenDistanceData7(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance7.seriesNumData = [60,120,200,250,200,160,120,80,40,20]
-          this.drivenDistance7.seriesPercentData = [6,12,20,25,20,16,12,8,4,2]
-          this.generateChartDrivenDistance7()
+      getDrivenDistanceData2(){
+        selectPowerConsumptionPerHundred().then((res)=>{
+          this.drivingEnergy2.seriesNumData = res.data.data.yValueDataList
+          this.drivingEnergy2.seriesPercentData = res.data.data.yPropDataList
+          this.generateChartDrivenDistance2()
+        }).finally(()=>{
+          if(this.drivingEnergy2.seriesNumData.length==0){
+            this.drivingEnergy2.seriesNumData = [60,120,200,250,200,160,120,80,40,20]
+            this.drivingEnergy2.seriesPercentData = [6,12,20,25,20,16,12,8,4,2]
+          }
+          this.generateChartDrivenDistance1()
         })
       },
-      generateChartDrivenDistance7(empty){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-7']);
+      generateChartDrivenDistance2(empty){
+        var myChart = this.$echarts.init(this.$refs['chart-driving-energy-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance7.chartTitle
+        chartOption.title.text = this.drivingEnergy2.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance7.xAxisData,
+          data:this.drivingEnergy2.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
-          name: this.viewType?'':'(单位:百辆)',
+          name: this.viewType?'':'(单位:百次)',
         }
         chartOption.series = [
             {
-              name: '车辆数',
+              name: '出行次数',
               type: 'bar',
               barWidth:'80%',
               itemStyle: {
@@ -250,7 +256,7 @@
                     color:'#4FC7AA'
                 }
               },
-              data:this.viewType?this.drivenDistance7.seriesPercentData:this.drivenDistance7.seriesNumData,
+              data:this.viewType?this.drivingEnergy2.seriesPercentData:this.drivingEnergy2.seriesNumData,
               label: {
                 show: true,
                 position: 'top',

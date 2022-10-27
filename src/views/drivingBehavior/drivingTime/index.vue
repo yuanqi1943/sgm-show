@@ -3,31 +3,31 @@
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
         <charts-card :cardInfo="drivenDistance1" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-1" id="chart-driven-distance-1"></div>
+          <div slot="chart" class="echart-view" ref="chart-driving-time-1" id="chart-driving-time-1"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
         <charts-card :cardInfo="drivenDistance2" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-2" id="chart-driven-distance-2"></div>
+          <div slot="chart" class="echart-view" ref="chart-driving-time-2" id="chart-driving-time-2"></div>
         </charts-card>  
       </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
         <charts-card :cardInfo="drivenDistance3" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-3" id="chart-driven-distance-3"></div>
+          <div slot="chart" class="echart-view" ref="chart-driving-time-3" id="chart-driving-time-3"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
         <charts-card :cardInfo="drivenDistance4" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-4" id="chart-driven-distance-4"></div>
+          <div slot="chart" class="echart-view" ref="chart-driving-time-4" id="chart-driving-time-4"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
         <charts-card :cardInfo="drivenDistance5" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-5" id="chart-driven-distance-5"></div>
+          <div slot="chart" class="echart-view" ref="chart-driving-time-5" id="chart-driving-time-5"></div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -35,7 +35,8 @@
 </template>
 
 <script>
-  import ChartsCard from '@/components/chartsCard.vue'
+import ChartsCard from '@/components/chartsCard.vue'
+import {selectTravelTime, selectSingleDrivingDuration, selectAverageDailyTravelFrequency, selectAverageDailyDrivingTime, selectDailyAccumulativeTravelFrequency} from '@/api/drivingBehavior'
   export default {
     name: 'drivingTime',
     components:{
@@ -181,14 +182,19 @@
         })
       },
       getDrivenDistanceData1(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance1.seriesNumData = [20,20,20,20,20,40,140,120,180,140,120,140,160,120,80,80,100,100,140,140,140,120,60,60]
-          this.drivenDistance1.seriesPercentData = [1,1,1,1,1,2,7,6,9,7,6,7,8,6,4,4,5,5,7,7,7,6,3,3]
+        selectTravelTime().then((res)=>{
+          this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance1.seriesNumData.length==0){
+            this.drivenDistance1.seriesNumData = [20,20,20,20,20,40,140,120,180,140,120,140,160,120,80,80,100,100,140,140,140,120,60,60]
+            this.drivenDistance1.seriesPercentData = [1,1,1,1,1,2,7,6,9,7,6,7,8,6,4,4,5,5,7,7,7,6,3,3]
+          }
           this.generateChartDrivenDistance1()
         })
       },
       generateChartDrivenDistance1(){
-        let myChart = this.$echarts.init(this.$refs['chart-driven-distance-1']);
+        let myChart = this.$echarts.init(this.$refs['chart-driving-time-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance1.chartTitle
@@ -232,14 +238,19 @@
       },
 
       getDrivenDistanceData2(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance2.seriesNumData = [160,180,100,90,40,50,30,10]
-          this.drivenDistance2.seriesPercentData = [16,18,10,9,4,5,3,1]
+        selectSingleDrivingDuration().then((res)=>{
+          this.drivenDistance2.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance2.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance1.seriesNumData.length==0){
+           this.drivenDistance2.seriesNumData = [160,180,100,90,40,50,30,10]
+            this.drivenDistance2.seriesPercentData = [16,18,10,9,4,5,3,1]
+          }
           this.generateChartDrivenDistance2()
         })
       },
       generateChartDrivenDistance2(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-2']);
+        var myChart = this.$echarts.init(this.$refs['chart-driving-time-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance2.chartTitle
@@ -283,15 +294,21 @@
         myChart.setOption(chartOption);
       },
 
+      //日均出行频次分布
       getDrivenDistanceData3(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance3.seriesNumData = [140,170,120,90,40,30,20,10,10]
-          this.drivenDistance3.seriesPercentData = [14,17,12,9,4,3,2,1,1]
+        selectAverageDailyTravelFrequency().then((res)=>{
+          this.drivenDistance3.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance3.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance1.seriesNumData.length==0){
+            this.drivenDistance3.seriesNumData = [140,170,120,90,40,30,20,10,10]
+            this.drivenDistance3.seriesPercentData = [14,17,12,9,4,3,2,1,1]
+          }
           this.generateChartDrivenDistance3()
         })
       },
       generateChartDrivenDistance3(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-3']);
+        var myChart = this.$echarts.init(this.$refs['chart-driving-time-3']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance3.chartTitle
@@ -324,15 +341,21 @@
         myChart.setOption(chartOption);
       },
 
+      //日均行驶时长分布
       getDrivenDistanceData4(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance4.seriesNumData = [200,400,700,1600,1800,1500,700,600,500,400,300,200,100]
-          this.drivenDistance4.seriesPercentData = [2,4,7,16,18,15,7,6,5,4,3,2,1]
+        selectAverageDailyDrivingTime().then((res)=>{
+          this.drivenDistance4.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance4.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance1.seriesNumData.length==0){
+            this.drivenDistance4.seriesNumData = [200,400,700,1600,1800,1500,700,600,500,400,300,200,100]
+            this.drivenDistance4.seriesPercentData = [2,4,7,16,18,15,7,6,5,4,3,2,1]
+          }
           this.generateChartDrivenDistance4()
         })
       },
       generateChartDrivenDistance4(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-4']);
+        var myChart = this.$echarts.init(this.$refs['chart-driving-time-4']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance4.chartTitle
@@ -365,15 +388,21 @@
         myChart.setOption(chartOption);
       },
 
+      //日累计出行频次分布
       getDrivenDistanceData5(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance5.seriesNumData = [20,30,40,80,120,160,130,20,10,10,10,170]
-          this.drivenDistance5.seriesPercentData = [2,3,4,8,12,16,13,2,1,1,1,17]
+        selectDailyAccumulativeTravelFrequency().then((res)=>{
+          this.drivenDistance5.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance5.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance1.seriesNumData.length==0){
+            this.drivenDistance5.seriesNumData = [20,30,40,80,120,160,130,20,10,10,10,170]
+            this.drivenDistance5.seriesPercentData = [2,3,4,8,12,16,13,2,1,1,1,17]
+          }
           this.generateChartDrivenDistance5()
         })
       },
       generateChartDrivenDistance5(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-5']);
+        var myChart = this.$echarts.init(this.$refs['chart-driving-time-5']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance5.chartTitle

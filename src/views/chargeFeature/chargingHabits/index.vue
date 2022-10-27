@@ -3,35 +3,35 @@
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
         <charts-card :cardInfo="chargingHabits1" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-1" id="chart-driven-distance-1"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-1" id="chart-charging-habits-1"></div>
         </charts-card>  
       </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
         <charts-card :cardInfo="chargingHabits2" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-2" id="chart-driven-distance-2"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-2" id="chart-charging-habits-2"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
         <charts-card :cardInfo="chargingHabits3" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-3" id="chart-driven-distance-3"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-3" id="chart-charging-habits-3"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
     <el-col class="" :span="24">
       <charts-card :cardInfo="chargingHabits4" :viewType='viewType'>
-        <div slot="chart" class="echart-view" ref="chart-driven-distance-4" id="chart-driven-distance-4"></div>
+        <div slot="chart" class="echart-view" ref="chart-charging-habits-4" id="chart-charging-habits-4"></div>
       </charts-card>  
     </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
         <charts-card :cardInfo="chargingHabits5" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-5" id="chart-driven-distance-5"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-5" id="chart-charging-habits-5"></div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -39,12 +39,12 @@
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
         <charts-card :cardInfo="chargingHabits6" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-6" id="chart-driven-distance-6"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-6" id="chart-charging-habits-6"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
         <charts-card :cardInfo="chargingHabits7" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-7" id="chart-driven-distance-7"></div>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-7" id="chart-charging-habits-7"></div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -53,6 +53,8 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
+  import {selectSOCDistributionOfSecondaryCharge, selectSecondaryChargeEnergyDistribution, selectTimeDistributionOfSecondaryCharging,
+    selectWeeklyChargingFrequency, selectChargingTimesPerDay, selectNumberOfChargingPoints, selectPercentageOfMaximumChargingLocations} from '@/api/chargingBehavior'
   export default {
     name: 'chargingHabits',
     components:{
@@ -112,7 +114,7 @@
           xAxisData:['0-5', '5-10', '10-15', '15-20', '20-25', '25-30','30-35','35-40','40-45','45-50','50-55','55-60','60-65','65-70','70-75','75-80','80-85','85-90','95-100'],
           seriesNumData:[],
           seriesPercentData:[],
-          title:'统计充电次数占比',
+          title:'次充电电量分布',
           subTitleNum:'统计充电次数',
           subTitlePercent:'统计出行车辆占比',
           chartTitle:'次充电电量(度)',
@@ -226,50 +228,59 @@
     },
     watch:{
       viewType(newVal){
-        this.generateChartDrivenDistance1()
-        this.generateChartDrivenDistance2()
-        this.generateChartDrivenDistance3()
-        this.generateChartDrivenDistance4()
-        this.generateChartDrivenDistance5()
-        this.generateChartDrivenDistance6()
-        this.generateChartDrivenDistance7()
+        this.generateChartChargingHabits1()
+        this.generateChartChargingHabits2()
+        this.generateChartChargingHabits3()
+        this.generateChartChargingHabits4()
+        this.generateChartChargingHabits5()
+        this.generateChartChargingHabits6()
+        this.generateChartChargingHabits7()
       }
     },
     methods:{
       generateEmptyEchart(){
         this.$nextTick(()=>{
-          this.generateChartDrivenDistance1()
-          this.generateChartDrivenDistance2()
-          this.generateChartDrivenDistance3()
-          this.generateChartDrivenDistance4()
-          this.generateChartDrivenDistance5()
-          this.generateChartDrivenDistance6()
-          this.generateChartDrivenDistance7()
+          this.generateChartChargingHabits1()
+          this.generateChartChargingHabits2()
+          this.generateChartChargingHabits3()
+          this.generateChartChargingHabits4()
+          this.generateChartChargingHabits5()
+          this.generateChartChargingHabits6()
+          this.generateChartChargingHabits7()
         })
       },
       generateEchart(){
-        this.getDrivenDistanceData1()
-        this.getDrivenDistanceData2()
-        this.getDrivenDistanceData3()
-        this.getDrivenDistanceData4()
-        this.getDrivenDistanceData5()
-        this.getDrivenDistanceData6()
-        this.getDrivenDistanceData7()
+        this.getChargingHabitsData1()
+        this.getChargingHabitsData2()
+        this.getChargingHabitsData3()
+        this.getChargingHabitsData4()
+        this.getChargingHabitsData5()
+        this.getChargingHabitsData6()
+        this.getChargingHabitsData7()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
           resolve(true)
         })
       },
-      getDrivenDistanceData1(){
-        this.getDataFuntion().then((res)=>{
-          this.chargingHabits1.seriesNumData = [590, 820, 950, 1100, 1190, 810, 680, 495, 460, 360, 300, 130, 90, 40, 30]
-          this.chargingHabits1.seriesPercentData = [6,10,13,14,15,10,8,7,6,4,3,2,1,1,1]
-          this.generateChartDrivenDistance1()
+      getChargingHabitsData1(){
+        selectSOCDistributionOfSecondaryCharge().then((res)=>{
+          this.chargingHabits1.seriesNumData1 = res.data.data.yStartValueDataList
+          this.chargingHabits1.seriesNumData2 = res.data.data.yFortyValueDataList
+          this.chargingHabits1.seriesPercentData1 = res.data.data.yEndValueDataList
+          this.chargingHabits1.seriesPercentData2 = res.data.data.yEndPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits1.seriesNumData1.length==0){
+            this.chargingHabits1.seriesNumData1 = [110,280,210,170,120,90,30,20,10,10]
+            this.chargingHabits1.seriesNumData2 = [140,160,230,270,220,150,100,50,40,10]
+            this.chargingHabits1.seriesPercentData1 = [11,28,21,17,12,9,3,2,1,1]
+            this.chargingHabits1.seriesPercentData2 = [14,16,23,27,22,15,10,5,4,1]
+          }
+          this.generateChartChargingHabits1()
         })
       },
-      generateChartDrivenDistance1(){
-        let myChart = this.$echarts.init(this.$refs['chart-driven-distance-1']);
+      generateChartChargingHabits1(){
+        let myChart = this.$echarts.init(this.$refs['chart-charging-habits-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits1.chartTitle
@@ -281,36 +292,90 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
+        chartOption.legend = {
+          data: ['次充电起始SOC', '次充电结束SOC',]
+        },
         chartOption.series = [
-            {
-              name: '出行次数',
-              type: 'bar',
-              barWidth:'20',
-              itemStyle: {
-                normal: {
-                    color:'#3893F9'
-                }
-              },
-              data:this.viewType?this.chargingHabits1.seriesPercentData:this.chargingHabits1.seriesNumData,
-              label: {
-                show: true,
-                position: 'top',
-                formatter:this.viewType?'{c}%':'{c}'
-              },
-            }
-          ]
+          {
+            name: '次充电起始SOC',
+            type: 'line',
+            data:this.viewType?this.chargingHabits1.seriesPercentData1:this.chargingHabits1.seriesNumData1,
+            lineStyle:{
+              color:'#3893F9'
+            },
+            itemStyle : {
+              normal : {
+                color:'#3893F9'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#3893F9' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+          {
+            name: '次充电结束SOC',
+            type: 'line',
+            data:this.viewType?this.chargingHabits1.seriesPercentData2:this.chargingHabits1.seriesNumData2,
+            lineStyle:{
+              color:'#81D82B'
+            },
+            itemStyle : {
+              normal : {
+                color:'#81D82B'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#81D82B' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+        ]
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData2(){
-        this.getDataFuntion().then((res)=>{
-          this.chargingHabits2.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60]
-          this.chargingHabits2.seriesPercentData = [9, 12, 14, 15, 16, 12, 10, 8, 5, 2, 2]
-          this.generateChartDrivenDistance2()
+      getChargingHabitsData2(){
+        selectSecondaryChargeEnergyDistribution().then((res)=>{
+          this.chargingHabits2.seriesNumData = res.data.data.yValueDataList
+          this.chargingHabits2.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits2.seriesNumData.length==0){
+            this.chargingHabits2.seriesNumData = [10,30,40,60,50,70,60,50,40,30,20,30,40,60,90,160,90,80,70,60]
+            this.chargingHabits2.seriesPercentData = [1,3,4,6,5,7,6,5,4,3,2,3,4,6,9,16,9,8,7,6]
+          }
+          this.generateChartChargingHabits2()
         })
       },
-      generateChartDrivenDistance2(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-2']);
+      generateChartChargingHabits2(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits2.chartTitle
@@ -324,7 +389,7 @@
         }
         chartOption.series = [
             {
-              name: '出行次数',
+              name: '车辆数量',
               type: 'bar',
               barWidth:'20',
               itemStyle: {
@@ -343,15 +408,25 @@
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData3(){
-        this.getDataFuntion().then((res)=>{
-          this.chargingHabits3.seriesNumData = [20, 100, 380, 410, 820, 630, 700, 600, 60, 370, 300, 10, 140]
-          this.chargingHabits3.seriesPercentData = [1, 2, 6, 6, 12, 9, 10, 9, 1, 5, 4, 1, 4]
-          this.generateChartDrivenDistance3()
+      //次充电时刻分布
+      getChargingHabitsData3(){
+        selectTimeDistributionOfSecondaryCharging().then((res)=>{
+          this.chargingHabits3.seriesNumData1 = res.data.data.yStartValueDataList
+          this.chargingHabits3.seriesNumData2 = res.data.data.yFortyValueDataList
+          this.chargingHabits3.seriesPercentData1 = res.data.data.yEndValueDataList
+          this.chargingHabits3.seriesPercentData2 = res.data.data.yEndPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits3.seriesNumData1.length==0){
+            this.chargingHabits3.seriesNumData1 = [110,280,210,170,120,90,30,20,10,10]
+            this.chargingHabits3.seriesNumData2 = [140,160,230,270,220,150,100,50,40,10]
+            this.chargingHabits3.seriesPercentData1 = [11,28,21,17,12,9,3,2,1,1]
+            this.chargingHabits3.seriesPercentData2 = [14,16,23,27,22,15,10,5,4,1]
+          }
+          this.generateChartChargingHabits3()
         })
       },
-      generateChartDrivenDistance3(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-3']);
+      generateChartChargingHabits3(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-3']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits3.chartTitle
@@ -363,39 +438,90 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
+        chartOption.legend = {
+          data: ['次充电起始时刻', '次充电结束时刻',]
+        },
         chartOption.series = [
-            {
-              name: '行驶里程',
-              type: 'line',
-              data:this.viewType?this.chargingHabits3.seriesPercentData:this.chargingHabits3.seriesNumData,
-              label: {
-                show: true,
-                position: 'top',
-                formatter:this.viewType?'{c}%':'{c}'
-              },
-              itemStyle: {
-                normal: {
-                    color:'#2BB896'
-                }
-              },
-              areaStyle:{
-                color:'#81D82B',
-                opacity:0.1,
-              },
-            }
-          ]
+          {
+            name: '次充电起始时刻',
+            type: 'line',
+            data:this.viewType?this.chargingHabits3.seriesPercentData1:this.chargingHabits3.seriesNumData1,
+            lineStyle:{
+              color:'#3893F9'
+            },
+            itemStyle : {
+              normal : {
+                color:'#3893F9'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#3893F9' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+          {
+            name: '次充电结束时刻',
+            type: 'line',
+            data:this.viewType?this.chargingHabits3.seriesPercentData2:this.chargingHabits3.seriesNumData2,
+            lineStyle:{
+              color:'#81D82B'
+            },
+            itemStyle : {
+              normal : {
+                color:'#81D82B'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#81D82B' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+        ]
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData4(){
+      getChargingHabitsData4(){
         this.getDataFuntion().then((res)=>{
-          this.chargingHabits4.seriesNumData = [230, 30, 420, 30, 640, 580, 830, 410, 200, 20]
-          this.chargingHabits4.seriesPercentData = [5, 1, 8, 1, 13, 12, 18, 8, 4, 1]
-          this.generateChartDrivenDistance4()
+          this.chargingHabits4.seriesNumData = res.data.data.yValueDataList
+          this.chargingHabits4.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits4.seriesNumData.length==0){
+            this.chargingHabits4.seriesNumData = [10,30,40,60,50,70,60,50,40,30,20,30,40,60,90,160,90,80,70,60]
+            this.chargingHabits4.seriesPercentData = [1,3,4,6,5,7,6,5,4,3,2,3,4,6,9,16,9,8,7,6]
+          }
+          this.generateChartChargingHabits4()
         })
       },
-      generateChartDrivenDistance4(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-4']);
+      generateChartChargingHabits4(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-4']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits4.chartTitle
@@ -423,15 +549,24 @@
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData5(){
+      getChargingHabitsData5(){
         this.getDataFuntion().then((res)=>{
-          this.chargingHabits5.seriesNumData = [90,70,100,40,90,700,900,600,740,140,190,120,390,400,420,400,420,80,100,70]
-          this.chargingHabits5.seriesPercentData = [1,1,1,1,1,7,9,6,7,1,2,1,4,4,4,4,4,1,1,1]
-          this.generateChartDrivenDistance5()
+          this.chargingHabits5.seriesNumData1 = res.data.data.yFortyValueDataList
+          this.chargingHabits5.seriesNumData2 = res.data.data.yFortyValueDataList
+          this.chargingHabits5.seriesPercentData1 = res.data.data.yFortyValueDataList
+          this.chargingHabits5.seriesPercentData2 = res.data.data.yFortyValueDataList
+        }).finally(()=>{
+          if(this.chargingHabits5.seriesNumData1.length==0){
+            this.chargingHabits5.seriesNumData1 = [110,280,210,170,120,90,30,20,10,10]
+            this.chargingHabits5.seriesNumData2 = [140,160,230,270,220,150,100,50,40,10]
+            this.chargingHabits5.seriesPercentData1 = [11,28,21,17,12,9,3,2,1,1]
+            this.chargingHabits5.seriesPercentData2 = [14,16,23,27,22,15,10,5,4,1]
+          }
+          this.generateChartChargingHabits5()
         })
       },
-      generateChartDrivenDistance5(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-5']);
+      generateChartChargingHabits5(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-5']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits5.chartTitle
@@ -443,61 +578,90 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
-        chartOption.visualMap = {
-          type: 'piecewise',
-          show: false,
-          dimension: 0,
-          seriesIndex: 0,
-          pieces: [
-            {
-              gt: 4,
-              lt: 8,
-              color: 'rgba(0, 0, 180, 0.4)'
-            },
-            {
-              gt: 11,
-              lt: 16,
-              color: 'rgba(0, 0, 180, 0.4)'
-            }
-          ]
+         chartOption.legend = {
+          data: ['最多单日充电次数', '次多单日充电次数',]
         },
         chartOption.series = [
-            {
-              name: '行驶里程',
-              type: 'line',
-              step: 'start',
-              lineStyle: {
-                color: '#5470C6',
-                width: 2
-              },
-              symbol: 'none',
-              data:this.viewType?this.chargingHabits5.seriesPercentData:this.chargingHabits5.seriesNumData,
-              label: {
-                show: true,
-                position: 'top',
-                formatter:this.viewType?'{c}%':'{c}'
-              },
-              areaStyle:{},
-            }
+          {
+            name: '最多单日充电次数',
+            type: 'line',
+            data:this.viewType?this.chargingHabits5.seriesPercentData1:this.chargingHabits5.seriesNumData1,
+            lineStyle:{
+              color:'#3893F9'
+            },
+            itemStyle : {
+              normal : {
+                color:'#3893F9'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#3893F9' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
+          {
+            name: '次多单日充电次数',
+            type: 'line',
+            data:this.viewType?this.chargingHabits5.seriesPercentData2:this.chargingHabits5.seriesNumData2,
+            lineStyle:{
+              color:'#81D82B'
+            },
+            itemStyle : {
+              normal : {
+                color:'#81D82B'
+              }
+            },
+            symbol:'circle',
+            symbolSize:'8',
+            areaStyle: {
+              opacity: 0.5,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#81D82B' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                }],
+                global: false
+              }
+            },
+          },
         ]
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData6(){
+      getChargingHabitsData6(){
         this.getDataFuntion().then((res)=>{
-          this.chargingHabits6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
-          this.chargingHabits6.seriesNumData2 = [1, 10, 180, 410, 450, 520, 440, 380, 190, 180, 120, 80, 50]
-          this.chargingHabits6.seriesNumData3 = [2, 40, 180, 310, 350, 410, 540, 480, 230, 160, 90, 60, 30]
-          this.chargingHabits6.seriesNumData4 = [3, 50, 100, 210, 310, 480, 640, 580, 300, 100, 60, 40, 10]
-          this.chargingHabits6.seriesPercentData1 = [0, 1, 2, 5, 9, 12, 14, 18, 16, 12, 10, 4, 1]
-          this.chargingHabits6.seriesPercentData2 = [0, 1, 3, 6, 8, 14, 16, 20, 17, 13, 9, 1, 1]
-          this.chargingHabits6.seriesPercentData3 = [1, 2, 4, 8, 12, 16, 19, 23, 20, 16, 10, 1, 1]
-          this.chargingHabits6.seriesPercentData4 = [1, 2, 5, 10, 14, 20, 15, 14, 12, 8, 5, 1, 1]
-          this.generateChartDrivenDistance6()
+          this.chargingHabits6.seriesNumData = res.data.data.yValueDataList
+          this.chargingHabits6.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits6.seriesNumData.length==0){
+            this.chargingHabits6.seriesNumData = [10,30,40,60,50,70,60,50,40,30,20,30,40,60,90,160,90,80,70,60]
+            this.chargingHabits6.seriesPercentData = [1,3,4,6,5,7,6,5,4,3,2,3,4,6,9,16,9,8,7,6]
+          }
+          this.generateChartChargingHabits6()
         })
       },
-      generateChartDrivenDistance6(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-6']);
+      generateChartChargingHabits6(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-6']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits6.chartTitle
@@ -511,99 +675,36 @@
           name: this.viewType?'':'(单位:百辆)',
           type: 'value'
         }
-        chartOption.legend = {
-          data: ['年度最长行驶里程', '年度第2长行驶里程', '年度第4长行驶里程', '年度第12长行驶里程']
-        },
         chartOption.series = [
-            {
-              name: '年度最长行驶里程',
-              type: 'line',
-              data:this.viewType?this.chargingHabits6.seriesPercentData1:this.chargingHabits6.seriesNumData1,
-              areaStyle:{
-                color:'#3893F9',
-                opacity:0.1,
-              },
-              lineStyle:{
-                color:'#3893F9'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#3893F9'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8'
+          {
+            name: '车辆数量',
+            type: 'line',
+            data:this.viewType?this.chargingHabits6.seriesPercentData:this.chargingHabits6.seriesNumData,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
             },
-            {
-              name: '年度第2长行驶里程',
-              type: 'line',
-              data:this.viewType?this.chargingHabits6.seriesPercentData2:this.chargingHabits6.seriesNumData2,
-              areaStyle:{
-                color:'#81D82B',
-                opacity:0.1,
-              },
-              lineStyle:{
-                color:'#81D82B'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#81D82B'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8'
-            },
-            {
-              name: '年度第4长行驶里程',
-              type: 'line',
-              data:this.viewType?this.chargingHabits6.seriesPercentData3:this.chargingHabits6.seriesNumData3,
-              areaStyle:{
-                color:'#93C602',
-                opacity:0.1,
-              },
-              lineStyle:{
-                color:'#93C602'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#93C602'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8'
-            },
-            {
-              name: '年度第12长行驶里程',
-              type: 'line',
-              data:this.viewType?this.chargingHabits6.seriesPercentData4:this.chargingHabits6.seriesNumData4,
-              areaStyle:{
-                color:'#6C7DA8',
-                opacity:0.1,
-              },
-              lineStyle:{
-                color:'#6C7DA8'
-              },
-              itemStyle : {
-                normal : {
-                  color:'#6C7DA8'
-                }
-              },
-              symbol:'circle',
-              symbolSize:'8'
-            }
-          ]
+            areaStyle:{},
+          }
+        ]
         myChart.setOption(chartOption);
       },
 
-      getDrivenDistanceData7(){
+      getChargingHabitsData7(){
         this.getDataFuntion().then((res)=>{
-          this.chargingHabits7.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60, 30]
-          this.chargingHabits7.seriesPercentData = [1,1,2,7,8,7,4,2,2,2,1,1]
-          this.generateChartDrivenDistance7()
+          this.chargingHabits7.seriesNumData = res.data.data.yValueDataList
+          this.chargingHabits7.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.chargingHabits7.seriesNumData.length==0){
+            this.chargingHabits7.seriesNumData = [10,30,40,60,50,70,60,50,40,30,20,30,40,60,90,160,90,80,70,60]
+            this.chargingHabits7.seriesPercentData = [1,3,4,6,5,7,6,5,4,3,2,3,4,6,9,16,9,8,7,6]
+          }
+          this.generateChartChargingHabits7()
         })
       },
-      generateChartDrivenDistance7(empty){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-7']);
+      generateChartChargingHabits7(empty){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-7']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.chargingHabits7.chartTitle
@@ -617,7 +718,7 @@
         }
         chartOption.series = [
             {
-              name: '车辆数',
+              name: '车辆数量',
               type: 'bar',
               barWidth:'20',
               itemStyle: {

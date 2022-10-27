@@ -51,7 +51,7 @@
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
   import {getAverageMileageDistribution, selectAverageDailyMileage, selectDailyAccumulatedMileage, 
-  selectMonthlyAccumulatedMileage, selectSingleChargeMileage, selectAnnualMaximumMileage} from '@/api/drivingBehavior'
+  selectMonthlyAccumulatedMileage, selectSingleChargeMileage, selectAnnualMaximumMileage, selectResidenceAndFarthestChargingDistance} from '@/api/drivingBehavior'
   export default {
     name: 'drivenDistance',
     components:{
@@ -61,6 +61,7 @@
       return{
         name:'',
         isNum:false,
+        formDataParams:{},
         chartOption:{
           title: {
             text: '',
@@ -221,6 +222,8 @@
         })
       },
       generateEchart(){
+        console.log(this.formData)
+        this.formDataParams = {}
         this.getDrivenDistanceData1()
         this.getDrivenDistanceData2()
         this.getDrivenDistanceData3()
@@ -237,6 +240,7 @@
 
       //次均行驶里程
       getDrivenDistanceData1(){
+
         getAverageMileageDistribution().then((res)=>{
           this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
@@ -470,6 +474,7 @@
       },
       generateChartDrivenDistance5(){
         var myChart = this.$echarts.init(this.$refs['chart-driven-distance-5']);
+        //计算markArea
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.drivenDistance5.chartTitle
@@ -515,16 +520,14 @@
 
       getDrivenDistanceData6(){
         selectAnnualMaximumMileage().then((res)=>{
-          console.log(res)
-          this.drivenDistance6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
-          this.drivenDistance6.seriesNumData2 = [1, 10, 180, 410, 450, 520, 440, 380, 190, 180, 120, 80, 50]
-          this.drivenDistance6.seriesNumData3 = [2, 40, 180, 310, 350, 410, 540, 480, 230, 160, 90, 60, 30]
-          this.drivenDistance6.seriesNumData4 = [3, 50, 100, 210, 310, 480, 640, 580, 300, 100, 60, 40, 10]
-          this.drivenDistance6.seriesPercentData1 = [0, 1, 2, 5, 9, 12, 14, 18, 16, 12, 10, 4, 1]
-          this.drivenDistance6.seriesPercentData2 = [0, 1, 3, 6, 8, 14, 16, 20, 17, 13, 9, 1, 1]
-          this.drivenDistance6.seriesPercentData3 = [1, 2, 4, 8, 12, 16, 19, 23, 20, 16, 10, 1, 1]
-          this.drivenDistance6.seriesPercentData4 = [1, 2, 5, 10, 14, 20, 15, 14, 12, 8, 5, 1, 1]
-          this.generateChartDrivenDistance6()
+          this.drivenDistance6.seriesNumData1 = res.data.data.yMaxValueDataList
+          this.drivenDistance6.seriesNumData2 = res.data.data.ySecondValueDataList
+          this.drivenDistance6.seriesNumData3 = res.data.data.yFourthValueDataList
+          this.drivenDistance6.seriesNumData4 = res.data.data.yTwelfthValueDataList
+          this.drivenDistance6.seriesPercentData1 = res.data.data.yMaxPropDataList
+          this.drivenDistance6.seriesPercentData2 = res.data.data.ySecondPropDataList
+          this.drivenDistance6.seriesPercentData3 = res.data.data.yFourthPropDataList
+          this.drivenDistance6.seriesPercentData4 = res.data.data.yTwelfthPropDataList
         }).finally(()=>{
           if(this.drivenDistance6.seriesNumData1.length==0){
             this.drivenDistance6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
@@ -536,7 +539,7 @@
             this.drivenDistance6.seriesPercentData3 = [1, 2, 4, 8, 12, 16, 19, 23, 20, 16, 10, 1, 1]
             this.drivenDistance6.seriesPercentData4 = [1, 2, 5, 10, 14, 20, 15, 14, 12, 8, 5, 1, 1]
           }
-          this.generateChartDrivenDistance4()
+          this.generateChartDrivenDistance6()
         })
       },
       generateChartDrivenDistance6(){
@@ -686,10 +689,16 @@
         myChart.setOption(chartOption);
       },
 
+      //居住地与最远充电距离分布
       getDrivenDistanceData7(){
-        this.getDataFuntion().then((res)=>{
-          this.drivenDistance7.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60, 30]
-          this.drivenDistance7.seriesPercentData = [1,1,2,7,8,7,4,2,2,2,1,1]
+        selectResidenceAndFarthestChargingDistance().then((res)=>{
+          this.drivenDistance7.seriesNumData = res.data.data.yValueDataList
+          this.drivenDistance7.seriesPercentData = res.data.data.yPropDataList
+        }).finally(()=>{
+          if(this.drivenDistance7.seriesNumData.length==0){
+            this.drivenDistance7.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60, 30]
+            this.drivenDistance7.seriesPercentData = [1,1,2,7,8,7,4,2,2,2,1,1]
+          }
           this.generateChartDrivenDistance7()
         })
       },

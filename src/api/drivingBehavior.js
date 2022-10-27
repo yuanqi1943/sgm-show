@@ -9,7 +9,7 @@ export function getAverageMileageDistribution(query) {
   })
 }
 
-//选择快速加速的累积时间
+//累计急加速时间
 export function selectAccumulatedTimesOfRapidAcceleration(query) {
   return request({
     url: '/sgm/api/drive/selectAccumulatedTimesOfRapidAcceleration',
@@ -135,7 +135,7 @@ export function selectIdleOrLowSpeedRatio(query) {
   })
 }
 
-//选择第二次驾驶的最大加速度
+//次驾驶的最大加速度
 export function selectMaximumAccelerationOfSecondDriving(query) {
   return request({
     url: '/sgm/api/drive/selectMaximumAccelerationOfSecondDriving',
@@ -144,7 +144,7 @@ export function selectMaximumAccelerationOfSecondDriving(query) {
   })
 }
 
-//选择第二次驾驶的最高速度
+//次驾驶的最高速度
 export function selectMaximumSpeedOfTheSecondDriving(query) {
   return request({
     url: '/sgm/api/drive/selectMaximumSpeedOfTheSecondDriving',
