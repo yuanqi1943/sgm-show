@@ -22,7 +22,15 @@
     <!-- charts components -->
     <div class="chart-box" style="width:100%;height:calc(100% - 50px)">
       <div class="sub-title">{{viewType?cardInfo.subTitlePercent:cardInfo.subTitleNum}}</div>
-      <slot class="chart" name="chart"/>
+      <slot v-if="!twoChart" class="chart" name="chart"/>
+      <el-row v-if="twoChart" class="">
+        <el-col class="" :span="proportion?proportion[0]:8">
+          <slot class="chart" name="chart1"/>
+        </el-col>
+        <el-col class="" :span="proportion?proportion[1]:16">
+          <slot class="chart" name="chart2"/>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -40,6 +48,16 @@ export default {
     viewType:{
       type: Boolean,
       required: true,
+    },
+    //多个图表
+    twoChart:{
+      type: Boolean,
+      required: false,
+    },
+    //多个图表比例
+    proportion:{
+      type: Array,
+      required: false,
     },
   },
   data() {
@@ -99,6 +117,12 @@ export default {
     }
     .chart{
       flex: 1;
+    }
+    .el-row{
+      width: 100%;
+    }
+    .el-col{
+      height: 100%;
     }
   }
 }
