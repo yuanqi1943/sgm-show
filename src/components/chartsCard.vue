@@ -9,19 +9,19 @@
         <el-popover class="description-info" placement="bottom-start" width="358" trigger="hover">
           <div>
             <p class="mgb-l"><strong class="info-title">指标业务定义:</strong>{{cardInfo.definition}}</p>
-            <p><strong class="info-title">横轴取值范围:</strong>{{cardInfo.range}}</p>
+            <p v-if="cardInfo.range&&cardInfo.range.length"><strong class="info-title">横轴取值范围:</strong>{{cardInfo.range}}</p>
           </div>
           <img slot="reference" class="info-icon" :src="img1">
         </el-popover>
       </div>
       <div class="info-right">
-        <span>数据量:{{cardInfo.dataTotal}};</span>
-        <span class="mgl-s">数据覆盖率:{{cardInfo.coverRate}}</span>
+        <span v-if="cardInfo.dataTotal">数据量:{{cardInfo.dataTotal}};</span>
+        <span class="mgl-s" v-if="cardInfo.coverRate">数据覆盖率:{{cardInfo.coverRate}}</span>
       </div>
     </div>
     <!-- charts components -->
     <div class="chart-box" style="width:100%;height:calc(100% - 50px)">
-      <div class="sub-title">{{viewType?cardInfo.subTitlePercent:cardInfo.subTitleNum}}</div>
+      <div v-if="cardInfo.subTitlePercent||cardInfo.subTitleNum" class="sub-title">{{viewType?cardInfo.subTitlePercent:cardInfo.subTitleNum}}</div>
       <slot v-if="!twoChart" class="chart" name="chart"/>
       <el-row v-if="twoChart" class="">
         <el-col class="" :span="proportion?proportion[0]:8">
@@ -126,4 +126,14 @@ export default {
     }
   }
 }
+  ::v-deep .el-table__cell{
+    padding: 4px 0;
+    font-size: 12px;
+  }
+  ::v-deep .el-table th.el-table__cell{
+    background-color:rgba(56, 147, 249, 0.2)
+  }
+  ::v-deep .el-radio-button__inner{
+    border-radius: 0 !important;
+  }
 </style>

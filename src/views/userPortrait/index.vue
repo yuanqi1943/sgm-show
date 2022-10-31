@@ -12,8 +12,8 @@
         </el-radio-group>
       </div>
       <div v-if="isMounted">
-        <order-analyze ref="orderAnalyze" v-show="activeName=='orderAnalyze'" :viewType="viewType"/>
-        <user-analyze ref="userAnalyze" v-show="activeName=='userAnalyze'" :viewType="viewType"/>
+        <user-analyze ref="userAnalyze" v-if="activeName=='userAnalyze'" :viewType="viewType"/>
+        <order-analyze ref="orderAnalyze" v-if="activeName=='orderAnalyze'" :viewType="viewType"/>
       </div>
     </div>
 

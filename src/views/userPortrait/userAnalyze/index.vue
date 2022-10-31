@@ -22,7 +22,30 @@
       <el-col class="" :span="18">
         <charts-card :cardInfo="userAnalyze4" :viewType='viewType' :twoChart='true' :proportion='[12,12]'>
           <div slot="chart1" class="echart-view" ref="chart-user-analyze-41" id="chart-user-analyze-41"></div>
-          <div slot="chart2" class="echart-view" ref="chart-user-analyze-42" id="chart-user-analyze-42"></div>
+          <div slot="chart2" class="echart-view" id="chart-user-analyze-42">
+            <div class="mgt-l">
+              <strong class="mgr-m">地域用户数TOP10</strong> 
+              <el-radio-group v-model="userAnalyze4.areaUser" size="medium" @change="changeAreaType">
+                <el-radio-button label="省级"></el-radio-button>
+                <el-radio-button label="市级"></el-radio-button>
+              </el-radio-group>
+            </div>
+            <el-table
+              :data="userAnalyze4.areaUserTable"
+              class="mgt-m"
+              style="width: 100%">
+              <el-table-column prop="city" label="城市" width="180"></el-table-column>
+              <el-table-column prop="amount" label="用户数量" width="180"></el-table-column>
+              <el-table-column prop="proportion" label="用户数量占比">
+                <template slot-scope="scope">
+                  <div class="flex-proportion">
+                    <div>{{scope.row.proportion}}%</div>
+                    <el-progress class="area-progress" :stroke-width="12" :percentage="scope.row.localProportion" :show-text='false'></el-progress>
+                  </div>
+                </template>  
+              </el-table-column>
+            </el-table>
+          </div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -32,6 +55,7 @@
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
   import chinaMap from "@/assets/map/json/china.json";
+  import chinaCities from "@/assets/map/json/china-cities.json";
   import {selectGenderRatio, selectAgeDistribution, selectResidentCityLevel, selectGeographicalDistribution} from '@/api/userPortrait'
   export default {
     name: 'userAnalyze',
@@ -123,11 +147,13 @@
           range:'',
           coverRate:'90%',
           dataTotal:'40214',
+          height:476,
         },
         userAnalyze4:{
-          xAxisData:[],
-          seriesNumData:[],
-          seriesPercentData:[],
+          areaUser:'市级',
+          areaUserCity:[],
+          areaUserProv:[],
+          areaUserTable:[],
           title:'用户地域分布',
           subTitleNum:'',
           subTitlePercent:'',
@@ -136,6 +162,7 @@
           range:'',
           coverRate:'90%',
           dataTotal:'45961',
+          height:476,
         },
       }
     },
@@ -151,7 +178,7 @@
         this.generateChartUserAnalyze21()
         this.generateChartUserAnalyze22()
         this.generateChartUserAnalyze3()
-        this.generateChartUserAnalyze3()
+        this.generateChartUserAnalyze4()
       }
     },
     methods:{
@@ -389,9 +416,51 @@
       getUserAnalyze4(){
         selectGeographicalDistribution().then((res)=>{
         }).finally(()=>{
-          if(this.userAnalyze4.seriesNumData.length==0){
-            this.userAnalyze4.seriesNumData = [60,30,30,50,90,120,180,140]
-            this.userAnalyze4.seriesPercentData = [6,3,3,5,9,12,18,14]
+          if(this.userAnalyze4.areaUserCity.length==0){
+            let  areaUserCity = [
+              {city:'上海',amount:14000,proportion:15},
+              {city:'北京',amount:13000,proportion:14},
+              {city:'深圳',amount:11000,proportion:13},
+              {city:'广州',amount:10000,proportion:13},
+              {city:'杭州',amount:6900,proportion:13},
+              {city:'成都',amount:6600,proportion:13},
+              {city:'苏州',amount:6200,proportion:13},
+              {city:'合肥',amount:3900,proportion:13},
+              {city:'武汉',amount:3700,proportion:13},
+              {city:'长沙',amount:3100,proportion:13},
+            ]
+            let areaUserCitySum = this.getArrSum(areaUserCity)
+            areaUserCity.forEach((item,index)=>{
+              if(index == 0){
+                item.localProportion = 100 / 2
+              }else{
+                item.localProportion = item.amount / areaUserCity[0].amount * 100 / 2
+              }
+            })
+            let areaUserProv = [
+              {city:'广东',amount:14000,proportion:15},
+              {city:'江苏',amount:13000,proportion:14},
+              {city:'山东',amount:11000,proportion:13},
+              {city:'浙江',amount:10000,proportion:13},
+              {city:'上海',amount:6900,proportion:13},
+              {city:'北京',amount:6600,proportion:13},
+              {city:'四川',amount:6200,proportion:13},
+              {city:'河南',amount:3900,proportion:13},
+              {city:'山东',amount:3700,proportion:13},
+              {city:'附件',amount:3100,proportion:13},
+            ]
+            let areaUserProvSum = this.getArrSum(areaUserProv)
+            areaUserProv.forEach((item,index)=>{
+              if(index == 0){
+                item.localProportion = 100 / 2
+              }else{
+                item.localProportion = item.amount / areaUserCity[0].amount * 100 / 2
+              }
+            })
+            this.userAnalyze4.areaUserCity = areaUserCity,
+            this.userAnalyze4.areaUserProv = areaUserProv,
+            this.changeAreaType()
+            console.log(this.userAnalyze4.areaUserTable)
           }
           this.generateChartUserAnalyze4()
         })
@@ -403,92 +472,91 @@
         let chartOption = {
             tooltip: {},
             visualMap: {
-                min: 0,
-                max: 1500,
-                left: 'left',
-                top: 'bottom',
-                text: ['高','低'],
-                seriesIndex: [1],
-                calculable:false,
-                inRange: {
-                    color: ['#fff','#3893F9']
-                },
-                itemWidth:20,
-                itemHeight:80,
-                orient:'horizontal',
+              min: 0,
+              max: 1500,
+              left: 'left',
+              top: 'bottom',
+              text: ['高','低'],
+              seriesIndex: [1],
+              calculable:false,
+              inRange: {
+                  color: ['#C5DCFF','#3893F9']
+              },
+              itemWidth:20,
+              itemHeight:80,
+              orient:'horizontal',
             },
-              geo: {
+            geo: {
                 map: 'china',
                 roam: true,
                 label: {
-                    normal: {
-                        show: false,
-                        textStyle: {
-                            color: 'rgba(31,134,240,0.4)'
-                        }
+                  normal: {
+                    show: false,
+                    textStyle: {
+                      color: 'rgba(31,134,240,0.4)'
                     }
+                  }
                 },
                 itemStyle: {
                     normal:{
-                        borderColor: 'rgba(31,134,240,0.2)'
+                      borderColor: 'rgba(255,255,255,0.5)',
+                      borderWidth:1,
                     },
-                    emphasis:{
-                        areaColor: null,
-                        shadowOffsetX: 0,
-                        shadowOffsetY: 0,
-                        shadowBlur: 20,
-                        borderWidth: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
+                },
+                scaleLimit:{
+                  min:1.25
+                } 
             },
                  series : [
                     {
-                        type: 'scatter',
-                        coordinateSystem: 'geo',
-                        symbolSize: 20,
-                        symbol: 'none',
-                        symbolRotate: 35,
-                        label: {
-                            normal: {
-                                formatter: '{b}',
-                                position: 'right',
-                                show: false
-                            },
-                            emphasis: {
-                                show: true
-                            }
+                      type: 'scatter',
+                      coordinateSystem: 'geo',
+                      symbolSize: 20,
+                      symbol: 'none',
+                      symbolRotate: 55,
+                      label: {
+                        normal: {
+                          formatter:function(params){
+                            return params.value
+                          },
+                          position: 'right',
+                          show: false
                         },
-                        itemStyle: {
-                            normal: {
-                                    color: '#F06C00'
-                            }
+                        emphasis: {
+                            show: true
                         }
+                      },
+                      itemStyle: {
+                          normal: {
+                            color: '#F06C00'
+                          }
+                      }
                     },
                     {
-                        name: 'categoryA',
+                        name: '购车数量(台)',
                         type: 'map',
                         geoIndex: 0,
-                        // tooltip: {show: false},
                         data:[
-                            {name: '北京', value: '0'},
+                            {name: '北京', value: '10'},
                             {name: '天津', value: '111'},
-                            {name: '上海', value: '222'},
-                            {name: '重庆', value: '333'},
-                            {name: '河北', value: '444'},
-                            {name: '河南', value: '555'},
-                            {name: '云南', value: '666'},
-                            {name: '辽宁', value: '777'},
-                            {name: '黑龙江', value: '888'},
-                            {name: '湖南', value: '999'},
-                            {name: '安徽', value: '1111'},
-                            {name: '山东', value: '1500'},
+                            {name: '上海', value: '1110'},
                         ]
                     }
                 ]
         } 
         myChart.setOption(chartOption);
       },
+      changeAreaType(){
+        this.userAnalyze4.areaUserTable = this.userAnalyze4.areaUser == '市级'? this.userAnalyze4.areaUserCity : this.userAnalyze4.areaUserProv
+      },
+      getArrSum(arr){
+        let s = 0;
+        arr.forEach(function(item) {
+          s += item.amount;
+        });
+        console.log(s)
+        return s
+      }
     }
   };
 </script>
@@ -509,5 +577,23 @@
   .echart-view{
     width: 100%;
     height: 100%;
+  }
+  .flex-proportion{
+    display: flex;
+    align-items: center;
+    .area-progress{
+      padding-left: 8px;
+      padding-left: 20px;
+      flex: 1;
+      border-radius: 0;
+      .el-progress-bar__outer{
+        background-color:transparent;
+        border-radius:0;
+      }
+      .el-progress-bar__inner{
+        background-color:#3893F9;
+        border-radius:0;
+      }
+    }
   }
 </style>
