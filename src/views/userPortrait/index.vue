@@ -38,6 +38,7 @@ export default {
       activeName:'',
       viewType:true,
       isMounted:false,
+      formDataParams:{}
     }
   },
   mounted(){
@@ -70,9 +71,9 @@ export default {
         model:formData.model.name,
         config:formData.config.name,
         market: formData.market,
-        use: formData.use,
-        guidingPrice: formData.price,
-        mileage: formData.mileage,
+        useType: formData.useType,
+        guidingPrice: formData.guidingPrice,
+        range: formData.range,
         searchStartDate:formData.monthrange?firstDay:'',
         searchEndDate:formData.monthrange?lastDay:'',
       }

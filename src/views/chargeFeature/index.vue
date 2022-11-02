@@ -67,11 +67,12 @@ export default {
         model:formData.model.name,
         config:formData.config.name,
         market: formData.market,
-        use: formData.use,
+        useType: formData.useType,
         holiday: formData.holiday,
-        mileage: formData.mileage,
+        range: formData.range,
         searchStartDate:formData.monthrange?firstDay:'',
         searchEndDate:formData.monthrange?lastDay:'',
+        chargePileType: formData.chargePileType,
       }
       this.$nextTick(()=>{
         this.$refs[this.activeName].generateEchart()

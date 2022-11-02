@@ -21,13 +21,12 @@
       </el-col>
       <el-col class="" :span="18">
         <charts-card :cardInfo="userAnalyze4" :viewType='viewType' :twoChart='true' :proportion='[12,12]'>
-          <!-- <div slot="select">
-            <el-form-item class="middle-select" label="车辆用途">
-              <el-select v-model="formData.use" placeholder="车辆用途">
-                <el-option v-for="use in useList" :key="use.label" :label="use.label" :value="use.value"></el-option>
-              </el-select>
-            </el-form-item>
-          </div> -->
+          <div class="inline-block mgl-l" slot="select">
+            <span class="color-primary mgr-s">统计维度:</span>
+            <el-select class="small-select" v-model="dimension" placeholder="统计维度">
+              <el-option label="居住地" value="居住地"></el-option>
+            </el-select>
+          </div>
           <div slot="chart1" class="echart-view" ref="chart-user-analyze-41" id="chart-user-analyze-41"></div>
           <div slot="chart2" class="echart-view" id="chart-user-analyze-42">
             <div class="mgt-l">
@@ -73,6 +72,7 @@
       return{
         name:'',
         isNum:false,
+        dimension:'居住地',
         pieChartOption:{
           title: {},
             tooltip: {
@@ -212,7 +212,7 @@
 
       //性别占比
       getUserAnalyze1(){
-        selectGenderRatio().then((res)=>{
+        selectGenderRatio(this.formDataParams).then((res)=>{
           this.userAnalyze1.seriesNumData = []
           this.userAnalyze1.seriesPercentData = []
         }).finally(()=>{
@@ -268,7 +268,7 @@
 
       //用户年龄分布
       getUserAnalyze2(){
-        selectAgeDistribution().then((res)=>{
+        selectAgeDistribution(this.formDataParams).then((res)=>{
           this.userAnalyze2.seriesNumData1 = res.data.data.valueData
           this.userAnalyze2.seriesPercentData1 = res.data.data.propData
           this.userAnalyze2.seriesNumData2 = res.data.data.yValueDataList
@@ -369,7 +369,7 @@
 
       //用户常驻城市级别分布
       getUserAnalyze3(){
-        selectResidentCityLevel().then((res)=>{
+        selectResidentCityLevel(this.formDataParams).then((res)=>{
           this.userAnalyze3.seriesNumData = res.data.data.valueData
           this.userAnalyze3.seriesPercentData = res.data.data.propData
         })
@@ -421,7 +421,7 @@
 
       //用户地域分布
       getUserAnalyze4(){
-        selectGeographicalDistribution().then((res)=>{
+        selectGeographicalDistribution(this.formDataParams).then((res)=>{
         }).finally(()=>{
           if(this.userAnalyze4.areaUserCity.length==0){
             let  areaUserCity = [

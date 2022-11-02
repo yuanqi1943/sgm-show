@@ -7,15 +7,15 @@
       label-position="top"
     >
       <el-form-item label="品牌/车型/配置">
-        <el-select class="smail-select" v-model="formData.brand" placeholder="品牌" value-key='id'>
+        <el-select class="small-select" v-model="formData.brand" placeholder="品牌" value-key='id'>
             <el-option label="全部品牌" value=""></el-option>
             <el-option v-for="brand in brandList" :key="brand.id" :label="brand.name" :value="brand"></el-option>
         </el-select>
-        <el-select class="smail-select" v-model="formData.model" placeholder="车型" value-key='id'>
+        <el-select class="small-select" v-model="formData.model" placeholder="车型" value-key='id'>
             <el-option label="全部车型" value=""></el-option>
             <el-option v-for="model in modelList" :key="model.id" :label="model.name" :value="model"></el-option>
         </el-select>
-        <el-select class="smail-select" v-model="formData.config" placeholder="配置" value-key='id'>
+        <el-select class="small-select" v-model="formData.config" placeholder="配置" value-key='id'>
             <el-option label="全部配置" value=""></el-option>
             <el-option v-for="config in configList" :key="config.id" :label="config.name" :value="config"></el-option>
         </el-select>
@@ -27,7 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item class="middle-select" label="车辆用途">
-        <el-select v-model="formData.use" placeholder="车辆用途">
+        <el-select v-model="formData.useType" placeholder="车辆用途">
           <el-option v-for="use in useList" :key="use.label" :label="use.label" :value="use.value"></el-option>
         </el-select>
       </el-form-item>
@@ -48,7 +48,7 @@
         </el-select>
       </el-form-item>
       <el-form-item class="middle-select" label="续航里程">
-        <el-select v-model="formData.mileage" placeholder="续航里程">
+        <el-select v-model="formData.range" placeholder="续航里程">
           <el-option v-for="mileage in mileageList" :key="mileage.label" :label="mileage.label" :value="mileage.value"></el-option>
         </el-select>
       </el-form-item>  
@@ -71,9 +71,9 @@ export default {
         model:'',
         config:'',
         market: "",
-        use: "",
+        useType: "",
         holiday: "",
-        mileage: "",
+        range: "",
         monthrange:"",
       },
       radio:'1',
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style lang="less">
-  .smail-select{
+  .small-select{
     width: 120px;
     margin-right: 4px;
   }
