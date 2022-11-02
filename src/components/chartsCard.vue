@@ -8,8 +8,8 @@
         <div class="title">{{ cardInfo.title }}</div>
         <el-popover class="description-info" placement="bottom-start" width="358" trigger="hover">
           <div>
-            <p class="mgb-l"><strong class="info-title">指标业务定义:</strong>{{cardInfo.definition}}</p>
-            <p v-if="cardInfo.range&&cardInfo.range.length"><strong class="info-title">横轴取值范围:</strong>{{cardInfo.range}}</p>
+            <p><strong class="info-title">指标业务定义:</strong>{{cardInfo.definition}}</p>
+            <p v-if="cardInfo.range&&cardInfo.range.length" class="mgt-l"><strong class="info-title">横轴取值范围:</strong>{{cardInfo.range}}</p>
           </div>
           <img slot="reference" class="info-icon" :src="img1">
         </el-popover>
@@ -17,6 +17,7 @@
       <div class="info-right">
         <span v-if="cardInfo.dataTotal">数据量:{{cardInfo.dataTotal}};</span>
         <span class="mgl-s" v-if="cardInfo.coverRate">数据覆盖率:{{cardInfo.coverRate}}</span>
+        <slot name="select"/>
       </div>
     </div>
     <!-- charts components -->

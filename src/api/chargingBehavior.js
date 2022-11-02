@@ -62,3 +62,21 @@ export function selectPercentageOfMaximumChargingLocations(query) {
     params: query
   })
 }
+
+//次充电时长分布
+export function selectDurationOfEachCharge(query) {
+  return request({
+    url: '/sgm/api/charge/selectDurationOfEachCharge',
+    method: 'get',
+    params: query
+  })
+}
+
+//充电功率分布
+export function selectChargingPower(query) {
+  return request({
+    url: '/sgm/api/charge/selectChargingPower',
+    method: 'get',
+    params: query
+  })
+}

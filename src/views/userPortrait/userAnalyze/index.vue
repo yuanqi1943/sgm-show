@@ -21,6 +21,13 @@
       </el-col>
       <el-col class="" :span="18">
         <charts-card :cardInfo="userAnalyze4" :viewType='viewType' :twoChart='true' :proportion='[12,12]'>
+          <!-- <div slot="select">
+            <el-form-item class="middle-select" label="车辆用途">
+              <el-select v-model="formData.use" placeholder="车辆用途">
+                <el-option v-for="use in useList" :key="use.label" :label="use.label" :value="use.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </div> -->
           <div slot="chart1" class="echart-view" ref="chart-user-analyze-41" id="chart-user-analyze-41"></div>
           <div slot="chart2" class="echart-view" id="chart-user-analyze-42">
             <div class="mgt-l">
@@ -166,7 +173,7 @@
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()

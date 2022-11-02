@@ -2,45 +2,45 @@
   <div class="echart-box">
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
-        <charts-card :cardInfo="drivenDistance1" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed1" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-1" id="chart-driving-speed-1"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
-        <charts-card :cardInfo="drivenDistance2" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed2" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-2" id="chart-driving-speed-2"></div>
         </charts-card>  
       </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
-        <charts-card :cardInfo="drivenDistance3" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed3" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-3" id="chart-driving-speed-3"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
-        <charts-card :cardInfo="drivenDistance4" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed4" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-4" id="chart-driving-speed-4"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
-        <charts-card :cardInfo="drivenDistance5" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed5" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-5" id="chart-driving-speed-5"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
-        <charts-card :cardInfo="drivenDistance6" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed6" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-6" id="chart-driving-speed-6"></div>
         </charts-card>  
       </el-col>
     </el-row>  
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="24">
-        <charts-card :cardInfo="drivenDistance7" :viewType='viewType'>
+        <charts-card :cardInfo="drivingSpeed7" :viewType='viewType'>
           <div slot="chart" class="echart-view" ref="chart-driving-speed-7" id="chart-driving-speed-7"></div>
         </charts-card>  
       </el-col>
@@ -92,7 +92,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
             }
           ]
         },
-        drivenDistance1:{
+        drivingSpeed1:{
           xAxisData:['0','10','20','30','40','50','60','70','80','90','100','110','120'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -105,7 +105,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'90%',
           dataTotal:'34540',
         },
-        drivenDistance2:{
+        drivingSpeed2:{
           xAxisData:['40','50','60','70','80','90','100','110','120','130','140','150','160'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -118,7 +118,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'92%',
           dataTotal:'30887',
         },
-        drivenDistance3:{
+        drivingSpeed3:{
           xAxisData:['0.0-0.1','0.1-0.2','0.2-0.3','0.3-0.4','0.4-0.5','0.5-0.6','0.6-0.7','0.7-0.8','0.8-0.9','0.9-1.0'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -131,7 +131,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'90%',
           dataTotal:'45961',
         },
-        drivenDistance4:{
+        drivingSpeed4:{
           xAxisData:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','14及以上'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -144,7 +144,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'90%',
           dataTotal:'40214',
         },
-        drivenDistance5:{
+        drivingSpeed5:{
           xAxisData:['0-10%','10%-20%','20%-30%','30%-40%','40%-50%','50%-60%','60%-70%','70%-80%','80%-90%','90%及以上',],
           seriesNumData1:[],
           seriesPercentData1:[],
@@ -159,7 +159,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'90%',
           dataTotal:'40214',
         },
-        drivenDistance6:{
+        drivingSpeed6:{
           xAxisData:['0-10%','10%-20%','20%-30%','30%-40%','40%-50%','50%-60%','60%-70%','70%-80%','80%-90%','90%及以上',],
           seriesNumData1:[],
           seriesPercentData1:[],
@@ -176,7 +176,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           coverRate:'90%',
           dataTotal:'40214',
         },
-        drivenDistance7:{
+        drivingSpeed7:{
           xAxisData:['100及以下','100-110','110-120','120-130','130-140','140-150','150-160','160-170','170-180','180-190','190及以上'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -191,43 +191,37 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()
       })
     },
     watch:{
-      viewType(newVal){
-        this.generateChartDrivenDistance1()
-        this.generateChartDrivenDistance2()
-        this.generateChartDrivenDistance3()
-        this.generateChartDrivenDistance4()
-        this.generateChartDrivenDistance5()
-        this.generateChartDrivenDistance6()
-        this.generateChartDrivenDistance7()
+      viewType(){
+       this.generateEmptyEchart()
       }
     },
     methods:{
       generateEmptyEchart(){
         this.$nextTick(()=>{
-          this.generateChartDrivenDistance1()
-          this.generateChartDrivenDistance2()
-          this.generateChartDrivenDistance3()
-          this.generateChartDrivenDistance4()
-          this.generateChartDrivenDistance5()
-          this.generateChartDrivenDistance6()
-          this.generateChartDrivenDistance7()
+          this.generateChartDrivingSpeed1()
+          this.generateChartDrivingSpeed2()
+          this.generateChartDrivingSpeed3()
+          this.generateChartDrivingSpeed4()
+          this.generateChartDrivingSpeed5()
+          this.generateChartDrivingSpeed6()
+          this.generateChartDrivingSpeed7()
         })
       },
       generateEchart(){
-        this.getDrivenDistanceData1()
-        this.getDrivenDistanceData2()
-        this.getDrivenDistanceData3()
-        this.getDrivenDistanceData4()
-        this.getDrivenDistanceData5()
-        this.getDrivenDistanceData6()
-        this.getDrivenDistanceData7()
+        this.getDrivingSpeedData1()
+        this.getDrivingSpeedData2()
+        this.getDrivingSpeedData3()
+        this.getDrivingSpeedData4()
+        this.getDrivingSpeedData5()
+        this.getDrivingSpeedData6()
+        this.getDrivingSpeedData7()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
@@ -236,25 +230,25 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //次行驶平均速度分布
-      getDrivenDistanceData1(){
-        selectAverageSpeedOfEachDriving().then((res)=>{
-          this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
-          this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
+      getDrivingSpeedData1(){
+        selectAverageSpeedOfEachDriving(this.formDataParams).then((res)=>{
+          this.drivingSpeed1.seriesNumData = res.data.data.yValueDataList
+          this.drivingSpeed1.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance1.seriesNumData.length==0){
-            this.drivenDistance1.seriesNumData = [20,10,20,100,130,100,110,60,70,110,100,40]
-            this.drivenDistance1.seriesPercentData = [2,1,2,10,13,10,11,6,7,11,10,4]
+          if(this.drivingSpeed1.seriesNumData.length==0){
+            this.drivingSpeed1.seriesNumData = [20,10,20,100,130,100,110,60,70,110,100,40]
+            this.drivingSpeed1.seriesPercentData = [2,1,2,10,13,10,11,6,7,11,10,4]
           }
-          this.generateChartDrivenDistance1()
+          this.generateChartDrivingSpeed1()
         })
       },
-      generateChartDrivenDistance1(){
+      generateChartDrivingSpeed1(){
         let myChart = this.$echarts.init(this.$refs['chart-driving-speed-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance1.chartTitle
+        chartOption.title.text = this.drivingSpeed1.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance1.xAxisData,
+          data:this.drivingSpeed1.xAxisData,
         }
         chartOption.yAxis = {
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
@@ -270,7 +264,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                 width: 2
               },
               symbol: 'none',
-              data:this.viewType?this.drivenDistance1.seriesPercentData:this.drivenDistance1.seriesNumData,
+              data:this.viewType?this.drivingSpeed1.seriesPercentData:this.drivingSpeed1.seriesNumData,
               label: {
                 show: true,
                 position: 'top',
@@ -293,25 +287,25 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //次行驶最高速度分布
-      getDrivenDistanceData2(){
-        selectMaximumSpeedOfTheSecondDriving().then((res)=>{
-          this.drivenDistance2.seriesNumData = res.data.data.yValueDataList
-          this.drivenDistance2.seriesPercentData = res.data.data.yPropDataList
+      getDrivingSpeedData2(){
+        selectMaximumSpeedOfTheSecondDriving(this.formDataParams).then((res)=>{
+          this.drivingSpeed2.seriesNumData = res.data.data.yValueDataList
+          this.drivingSpeed2.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance2.seriesNumData.length==0){
-            this.drivenDistance2.seriesNumData = [20,30,40,130,110,120,110,100,80,40,20,10]
-            this.drivenDistance2.seriesPercentData = [2,3,4,13,11,12,11,10,8,4,2,1]
+          if(this.drivingSpeed2.seriesNumData.length==0){
+            this.drivingSpeed2.seriesNumData = [20,30,40,130,110,120,110,100,80,40,20,10]
+            this.drivingSpeed2.seriesPercentData = [2,3,4,13,11,12,11,10,8,4,2,1]
           }
-          this.generateChartDrivenDistance2()
+          this.generateChartDrivingSpeed2()
         })
       },
-      generateChartDrivenDistance2(){
+      generateChartDrivingSpeed2(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance2.chartTitle
+        chartOption.title.text = this.drivingSpeed2.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance2.xAxisData,
+          data:this.drivingSpeed2.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
@@ -328,7 +322,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                 width: 2
               },
               symbol: 'none',
-              data:this.viewType?this.drivenDistance2.seriesPercentData:this.drivenDistance2.seriesNumData,
+              data:this.viewType?this.drivingSpeed2.seriesPercentData:this.drivingSpeed2.seriesNumData,
               label: {
                 show: true,
                 position: 'top',
@@ -350,25 +344,25 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //次行驶最大加速度分布
-      getDrivenDistanceData3(){
-        selectMaximumAccelerationOfSecondDriving().then((res)=>{
-          this.drivenDistance3.seriesNumData = res.data.data.yValueDataList
-          this.drivenDistance3.seriesPercentData = res.data.data.yPropDataList
+      getDrivingSpeedData3(){
+        selectMaximumAccelerationOfSecondDriving(this.formDataParams).then((res)=>{
+          this.drivingSpeed3.seriesNumData = res.data.data.yValueDataList
+          this.drivingSpeed3.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance3.seriesNumData.length==0){
-            this.drivenDistance3.seriesNumData = [40,20,60,20,10,90,120,70,30,10]
-            this.drivenDistance3.seriesPercentData = [4,2,6,2,1,9,12,7,3,1]
+          if(this.drivingSpeed3.seriesNumData.length==0){
+            this.drivingSpeed3.seriesNumData = [40,20,60,20,10,90,120,70,30,10]
+            this.drivingSpeed3.seriesPercentData = [4,2,6,2,1,9,12,7,3,1]
           }
-          this.generateChartDrivenDistance3()
+          this.generateChartDrivingSpeed3()
         })
       },
-      generateChartDrivenDistance3(){
+      generateChartDrivingSpeed3(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-3']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance3.chartTitle
+        chartOption.title.text = this.drivingSpeed3.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance3.xAxisData,
+          data:this.drivingSpeed3.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
@@ -379,7 +373,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
             {
               name: '出行次数',
               type: 'line',
-              data:this.viewType?this.drivenDistance3.seriesPercentData:this.drivenDistance3.seriesNumData,
+              data:this.viewType?this.drivingSpeed3.seriesPercentData:this.drivingSpeed3.seriesNumData,
               label: {
                 show: true,
                 position: 'top',
@@ -412,25 +406,25 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //次行驶累计急加速次数分布
-      getDrivenDistanceData4(){
-        selectAccumulatedTimesOfRapidAcceleration().then((res)=>{
-          this.drivenDistance4.seriesNumData = res.data.data.yValueDataList
-          this.drivenDistance4.seriesPercentData = res.data.data.yPropDataList
+      getDrivingSpeedData4(){
+        selectAccumulatedTimesOfRapidAcceleration(this.formDataParams).then((res)=>{
+          this.drivingSpeed4.seriesNumData = res.data.data.yValueDataList
+          this.drivingSpeed4.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance4.seriesNumData.length==0){
-            this.drivenDistance4.seriesNumData = [80,110,110,110,100,80,70,60,50,40,30,10,10,10,10,10]
-            this.drivenDistance4.seriesPercentData = [8,11,11,11,10,8,7,6,5,4,3,1,1,1,1,1]
+          if(this.drivingSpeed4.seriesNumData.length==0){
+            this.drivingSpeed4.seriesNumData = [80,110,110,110,100,80,70,60,50,40,30,10,10,10,10,10]
+            this.drivingSpeed4.seriesPercentData = [8,11,11,11,10,8,7,6,5,4,3,1,1,1,1,1]
           }
-          this.generateChartDrivenDistance4()
+          this.generateChartDrivingSpeed4()
         })
       },
-      generateChartDrivenDistance4(){
+      generateChartDrivingSpeed4(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-4']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance4.chartTitle
+        chartOption.title.text = this.drivingSpeed4.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance4.xAxisData,
+          data:this.drivingSpeed4.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
@@ -447,7 +441,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                   color:'#3893F9'
               }
             },
-            data:this.viewType?this.drivenDistance4.seriesPercentData:this.drivenDistance4.seriesNumData,
+            data:this.viewType?this.drivingSpeed4.seriesPercentData:this.drivingSpeed4.seriesNumData,
             label: {
               show: true,
               position: 'top',
@@ -459,29 +453,29 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //怠速/低速占比分布
-      getDrivenDistanceData5(){
-        selectIdleOrLowSpeedRatio().then((res)=>{
-          this.drivenDistance5.seriesNumData1 = res.data.data.yIdleValueDataList
-          this.drivenDistance5.seriesPercentData1 = res.data.data.yIdlePropDataList
-          this.drivenDistance5.seriesNumData2 = res.data.data.yLowValueDataList
-          this.drivenDistance5.seriesPercentData2 = res.data.data.yLowPropDataList
+      getDrivingSpeedData5(){
+        selectIdleOrLowSpeedRatio(this.formDataParams).then((res)=>{
+          this.drivingSpeed5.seriesNumData1 = res.data.data.yIdleValueDataList
+          this.drivingSpeed5.seriesPercentData1 = res.data.data.yIdlePropDataList
+          this.drivingSpeed5.seriesNumData2 = res.data.data.yLowValueDataList
+          this.drivingSpeed5.seriesPercentData2 = res.data.data.yLowPropDataList
         }).finally(()=>{
-          if(this.drivenDistance5.seriesNumData1.length==0){
-            this.drivenDistance5.seriesNumData1 = [40,110,80,50,30,20,10,10,10,10]
-            this.drivenDistance5.seriesNumData2 = [60,90,80,70,50,40,30,20,10,10]
-            this.drivenDistance5.seriesPercentData1 = [4,11,8,5,3,2,1,1,1,1]
-            this.drivenDistance5.seriesPercentData2 = [6,9,8,7,5,4,3,2,1,1]
+          if(this.drivingSpeed5.seriesNumData1.length==0){
+            this.drivingSpeed5.seriesNumData1 = [40,110,80,50,30,20,10,10,10,10]
+            this.drivingSpeed5.seriesNumData2 = [60,90,80,70,50,40,30,20,10,10]
+            this.drivingSpeed5.seriesPercentData1 = [4,11,8,5,3,2,1,1,1,1]
+            this.drivingSpeed5.seriesPercentData2 = [6,9,8,7,5,4,3,2,1,1]
           }
-          this.generateChartDrivenDistance5()
+          this.generateChartDrivingSpeed5()
         })
       },
-      generateChartDrivenDistance5(){
+      generateChartDrivingSpeed5(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-5']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance5.chartTitle
+        chartOption.title.text = this.drivingSpeed5.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance5.xAxisData,
+          data:this.drivingSpeed5.xAxisData,
           axisLabel:{interval:'0'},
         }
         chartOption.yAxis = {
@@ -495,7 +489,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           {
             name: '怠速分布比例',
             type: 'line',
-            data:this.viewType?this.drivenDistance5.seriesPercentData1:this.drivenDistance5.seriesNumData1,
+            data:this.viewType?this.drivingSpeed5.seriesPercentData1:this.drivingSpeed5.seriesNumData1,
             lineStyle:{
               color:'#3893F9'
             },
@@ -526,7 +520,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
           {
             name: '低速分布比例',
             type: 'line',
-            data:this.viewType?this.drivenDistance5.seriesPercentData2:this.drivenDistance5.seriesNumData2,
+            data:this.viewType?this.drivingSpeed5.seriesPercentData2:this.drivingSpeed5.seriesNumData2,
             lineStyle:{
               color:'#81D82B'
             },
@@ -559,33 +553,33 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //高速占比分布
-      getDrivenDistanceData6(){
-        selectHighSpeedRatio().then((res)=>{
-          this.drivenDistance6.seriesNumData1 = res.data.data.yFortyValueDataList
-          this.drivenDistance6.seriesNumData2 = res.data.data.yEightValueDataList
-          this.drivenDistance6.seriesNumData3 = res.data.data.yFourthValueDataList
-          this.drivenDistance6.seriesPercentData1 = res.data.data.yFortyPropDataList
-          this.drivenDistance6.seriesPercentData2 = res.data.data.yhTwentyLowValueDataList
-          this.drivenDistance6.seriesPercentData3 = res.data.data.yhTwentyPropDataList
+      getDrivingSpeedData6(){
+        selectHighSpeedRatio(this.formDataParams).then((res)=>{
+          this.drivingSpeed6.seriesNumData1 = res.data.data.yFortyValueDataList
+          this.drivingSpeed6.seriesNumData2 = res.data.data.yEightValueDataList
+          this.drivingSpeed6.seriesNumData3 = res.data.data.yFourthValueDataList
+          this.drivingSpeed6.seriesPercentData1 = res.data.data.yFortyPropDataList
+          this.drivingSpeed6.seriesPercentData2 = res.data.data.yhTwentyLowValueDataList
+          this.drivingSpeed6.seriesPercentData3 = res.data.data.yhTwentyPropDataList
         }).finally(()=>{
-          if(this.drivenDistance6.seriesNumData1.length==0){
-            this.drivenDistance6.seriesNumData1 = [10,10,10,20,40,70,80,60,30,10]
-            this.drivenDistance6.seriesNumData2 = [10,10,20,40,80,80,60,40,20,10]
-            this.drivenDistance6.seriesNumData3 = [10,10,50,80,80,50,40,30,20,10]
-            this.drivenDistance6.seriesPercentData1 = [1,1,1,2,4,7,8,6,3,1]
-            this.drivenDistance6.seriesPercentData2 = [1,1,2,4,8,8,6,4,2,1]
-            this.drivenDistance6.seriesPercentData3 = [1,1,5,8,8,5,4,3,2,1]
+          if(this.drivingSpeed6.seriesNumData1.length==0){
+            this.drivingSpeed6.seriesNumData1 = [10,10,10,20,40,70,80,60,30,10]
+            this.drivingSpeed6.seriesNumData2 = [10,10,20,40,80,80,60,40,20,10]
+            this.drivingSpeed6.seriesNumData3 = [10,10,50,80,80,50,40,30,20,10]
+            this.drivingSpeed6.seriesPercentData1 = [1,1,1,2,4,7,8,6,3,1]
+            this.drivingSpeed6.seriesPercentData2 = [1,1,2,4,8,8,6,4,2,1]
+            this.drivingSpeed6.seriesPercentData3 = [1,1,5,8,8,5,4,3,2,1]
           }
-          this.generateChartDrivenDistance6()
+          this.generateChartDrivingSpeed6()
         })
       },
-      generateChartDrivenDistance6(){
+      generateChartDrivingSpeed6(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-6']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance6.chartTitle
+        chartOption.title.text = this.drivingSpeed6.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance6.xAxisData,
+          data:this.drivingSpeed6.xAxisData,
           axisLabel:{interval:'0'},
           type: 'category',
         }
@@ -601,7 +595,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
             {
               name: '40以上高速占比',
               type: 'line',
-              data:this.viewType?this.drivenDistance6.seriesPercentData1:this.drivenDistance6.seriesNumData1,
+              data:this.viewType?this.drivingSpeed6.seriesPercentData1:this.drivingSpeed6.seriesNumData1,
               lineStyle:{
                 color:'#3893F9'
               },
@@ -632,7 +626,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
             {
               name: '80以上高速占比',
               type: 'line',
-              data:this.viewType?this.drivenDistance6.seriesPercentData2:this.drivenDistance6.seriesNumData2,
+              data:this.viewType?this.drivingSpeed6.seriesPercentData2:this.drivingSpeed6.seriesNumData2,
               lineStyle:{
                 color:'#81D82B'
               },
@@ -663,7 +657,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
             {
               name: '120以上高速占比',
               type: 'line',
-              data:this.viewType?this.drivenDistance6.seriesPercentData3:this.drivenDistance6.seriesNumData3,
+              data:this.viewType?this.drivingSpeed6.seriesPercentData3:this.drivingSpeed6.seriesNumData3,
               lineStyle:{
                 color:'#93C602'
               },
@@ -696,25 +690,25 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
       },
 
       //一年最高车速分布
-      getDrivenDistanceData7(){
-        selectAnnualMaximumSpeed().then((res)=>{
-          this.drivenDistance7.seriesNumData = res.data.data.yValueDataList
-          this.drivenDistance7.seriesPercentData = res.data.data.yPropDataList
+      getDrivingSpeedData7(){
+        selectAnnualMaximumSpeed(this.formDataParams).then((res)=>{
+          this.drivingSpeed7.seriesNumData = res.data.data.yValueDataList
+          this.drivingSpeed7.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance7.seriesNumData.length==0){
-            this.drivenDistance7.seriesNumData = [10,10,20,70,80,70,40,20,20,30,10,10]
-            this.drivenDistance7.seriesPercentData = [1,1,2,7,8,7,4,2,2,3,1,1]
+          if(this.drivingSpeed7.seriesNumData.length==0){
+            this.drivingSpeed7.seriesNumData = [10,10,20,70,80,70,40,20,20,30,10,10]
+            this.drivingSpeed7.seriesPercentData = [1,1,2,7,8,7,4,2,2,3,1,1]
           }
-          this.generateChartDrivenDistance7()
+          this.generateChartDrivingSpeed7()
         })
       },
-      generateChartDrivenDistance7(){
+      generateChartDrivingSpeed7(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-speed-7']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.drivenDistance4.chartTitle
+        chartOption.title.text = this.drivingSpeed7.chartTitle
         chartOption.xAxis = {
-          data:this.drivenDistance4.xAxisData,
+          data:this.drivingSpeed7.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
@@ -731,7 +725,7 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                   color:'#3893F9'
               }
             },
-            data:this.viewType?this.drivenDistance7.seriesPercentData:this.drivenDistance7.seriesNumData,
+            data:this.viewType?this.drivingSpeed7.seriesPercentData:this.drivingSpeed7.seriesNumData,
             label: {
               show: true,
               position: 'top',

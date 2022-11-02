@@ -61,7 +61,6 @@
       return{
         name:'',
         isNum:false,
-        formDataParams:{},
         chartOption:{
           title: {
             text: '',
@@ -102,7 +101,7 @@
           chartTitle:'次均行驶里程(km)',
           subTitlePercent:'统计出行车辆占比',
           definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          range:'0-5:≥0-<5,5-10:≥5-<10',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -114,8 +113,8 @@
           subTitleNum:'统计出行车辆数量',
           subTitlePercent:'统计出行车辆占比',
           chartTitle:'日均行驶里程(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'每辆车统计期间内平均每日行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内总天数。',
+          range:'0-20:≥0-<20,20-40:≥20-<40',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -127,8 +126,8 @@
           subTitleNum:'统计出行总天数',
           subTitlePercent:'统计出行总天数占比',
           chartTitle:'日累计行驶里程(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'每辆车统计期间内每日的总行驶里程。计算逻辑为统计期间单日内每辆车每次的行驶里程。',
+          range:'0-30:≥0-<30,30-60:≥30-<60',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -140,8 +139,8 @@
           subTitleNum:'统计出行总天数',
           subTitlePercent:'统计出行总天数占比',
           chartTitle:'月累计行驶里程(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'每辆车统计期间内每月的总行驶里程。计算逻辑为Σ统计期间单月内每辆车每日的行驶里程。',
+          range:'0-100:≥0-<100,100-200:≥100-<200',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -153,8 +152,8 @@
           subTitleNum:'统计出行车辆数量',
           subTitlePercent:'统计出行车辆占比',
           chartTitle:'次充电行为间累计行驶里程(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'每辆车统计期间内两次充电行为之间用户车辆的行驶里程分布情况，分析用户次充电行为与行驶里程关系。计算逻辑为每辆车统计期间内两次充电行为之间的累计行驶里程。',
+          range:'0-25:≥0-<25,25-50:≥25-<50',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -172,8 +171,8 @@
           subTitleNum:'统计出行车辆数量',
           subTitlePercent:'统计出行车辆占比',
           chartTitle:'年度最长行驶里程(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'年度最长行驶里程:每辆车近一年单日行驶里程中最长一天的里程。计算逻辑为取每辆车近一年单日累计行驶里程的最大值。年度第2长行驶里程:每辆车近一年单日行驶里程中第2长一天的里程。计算逻辑为取每辆车近一年单日累计行驶里程的次最大值。年度第4长行驶里程:每辆车近一年单日行驶里程中第4长一天的里程。计算逻辑为取每辆车近一年单日累计行驶里程的第4大值。一年中第12长里程:每辆车近一年单日行驶里程中第12长一天的里程。计算逻辑为取每辆车近一年单日累计行驶里程的第12大值。',
+          range:'0-50:≥0-<50,50-100:≥50-<100',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -185,28 +184,22 @@
           subTitleNum:'统计出行车辆数量',
           subTitlePercent:'统计出行车辆占比',
           chartTitle:'居住地与最远充电距离(km)',
-          definition:'每辆车统计期间内平均每次行驶的里程数。计算逻辑为统计期间内每辆车累计行驶里程/统计期间内行驶次数。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          definition:'统计期间内每辆车居住地与最远充电地方的距离，反映用户充电习惯。计算逻辑为取统计期间内每辆车居住地与充电地距离的最大值。',
+          range:'0-50:≥0-<50,50-100:≥50-<100',
           coverRate:'90%',
           dataTotal:'45961',
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()
       })
     },
     watch:{
-      viewType(newVal){
-        this.generateChartDrivenDistance1()
-        this.generateChartDrivenDistance2()
-        this.generateChartDrivenDistance3()
-        this.generateChartDrivenDistance4()
-        this.generateChartDrivenDistance5()
-        this.generateChartDrivenDistance6()
-        this.generateChartDrivenDistance7()
+      viewType(){
+        this.generateEmptyEchart()
       }
     },
     methods:{
@@ -222,8 +215,7 @@
         })
       },
       generateEchart(){
-        console.log(this.formData)
-        this.formDataParams = {}
+        console.log(this.formDataParams)
         this.getDrivenDistanceData1()
         this.getDrivenDistanceData2()
         this.getDrivenDistanceData3()
@@ -240,8 +232,8 @@
 
       //次均行驶里程
       getDrivenDistanceData1(){
-
-        getAverageMileageDistribution().then((res)=>{
+        console.log(this.formDataParams)
+        getAverageMileageDistribution(this.formDataParams).then((res)=>{
           this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -288,7 +280,7 @@
 
       //日均行驶里程
       getDrivenDistanceData2(){
-        selectAverageDailyMileage().then((res)=>{
+        selectAverageDailyMileage(this.formDataParams).then((res)=>{
           this.drivenDistance2.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance2.seriesPercentData = res.data.data.yPropDataList
         })
@@ -336,7 +328,7 @@
 
       //日累计行驶里程
       getDrivenDistanceData3(){
-        selectDailyAccumulatedMileage().then((res)=>{
+        selectDailyAccumulatedMileage(this.formDataParams).then((res)=>{
           this.drivenDistance3.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance3.seriesPercentData = res.data.data.yPropDataList
         })
@@ -399,7 +391,7 @@
 
       //月累计行程
       getDrivenDistanceData4(){
-        selectMonthlyAccumulatedMileage().then((res)=>{
+        selectMonthlyAccumulatedMileage(this.formDataParams).then((res)=>{
           this.drivenDistance4.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance4.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -461,7 +453,7 @@
 
       //次充电累计行程
       getDrivenDistanceData5(){
-        selectSingleChargeMileage().then((res)=>{
+        selectSingleChargeMileage(this.formDataParams).then((res)=>{
           this.drivenDistance5.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance5.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -518,8 +510,9 @@
         myChart.setOption(chartOption);
       },
 
+      //年度长行驶里程分布
       getDrivenDistanceData6(){
-        selectAnnualMaximumMileage().then((res)=>{
+        selectAnnualMaximumMileage(this.formDataParams).then((res)=>{
           this.drivenDistance6.seriesNumData1 = res.data.data.yMaxValueDataList
           this.drivenDistance6.seriesNumData2 = res.data.data.ySecondValueDataList
           this.drivenDistance6.seriesNumData3 = res.data.data.yFourthValueDataList

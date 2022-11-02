@@ -7,88 +7,173 @@
       label-position="top"
     >
       <el-form-item label="品牌/车型/配置">
-        <el-select class="smail-select" v-model="formData.a" placeholder="品牌">
-            <el-option label="全部品牌" value="all"></el-option>
+        <el-select class="smail-select" v-model="formData.brand" placeholder="品牌" value-key='id'>
+            <el-option label="全部品牌" value=""></el-option>
+            <el-option v-for="brand in brandList" :key="brand.id" :label="brand.name" :value="brand"></el-option>
         </el-select>
-        <el-select class="smail-select" v-model="formData.a" placeholder="车型">
-            <el-option label="全部车型" value="all"></el-option>
+        <el-select class="smail-select" v-model="formData.model" placeholder="车型" value-key='id'>
+            <el-option label="全部车型" value=""></el-option>
+            <el-option v-for="model in modelList" :key="model.id" :label="model.name" :value="model"></el-option>
         </el-select>
-        <el-select class="smail-select" v-model="formData.a" placeholder="配置">
-            <el-option label="全部配置" value="all"></el-option>
+        <el-select class="smail-select" v-model="formData.config" placeholder="配置" value-key='id'>
+            <el-option label="全部配置" value=""></el-option>
+            <el-option v-for="config in configList" :key="config.id" :label="config.name" :value="config"></el-option>
         </el-select>
       </el-form-item>
   
       <el-form-item label="细分市场">
-        <el-select class="smail-select" v-model="formData.a" placeholder="细分市场">
-          <el-option label="全部" value="all"></el-option>
+        <el-select class="middle-select" v-model="formData.market" placeholder="细分市场">
+          <el-option v-for="market in marketList" :key="market.label" :label="market.label" :value="market.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="smail-select" label="车辆用途">
-        <el-select v-model="formData.b" placeholder="车辆用途">
-          <el-option label="1" value="shanghai"></el-option>
-          <el-option label="2" value="beijing"></el-option>
+      <el-form-item class="middle-select" label="车辆用途">
+        <el-select v-model="formData.use" placeholder="车辆用途">
+          <el-option v-for="use in useList" :key="use.label" :label="use.label" :value="use.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="" label="时间范围">
+      <el-form-item class="middle-date" label="时间范围">
         <el-date-picker
-          v-model="formData.b"
+          v-model="formData.monthrange"
           type="monthrange"
           range-separator="-"
+          value-format="yyyy-MM"
           start-placeholder="开始月份"
           end-placeholder="结束月份"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item class="smail-select" label="是否节假日">
-        <el-select v-model="formData.c" placeholder="是否节假日">
-          <el-option label="1" value="shanghai"></el-option>
-          <el-option label="2" value="beijing"></el-option>
+      <el-form-item class="middle-select" label="是否节假日">
+        <el-select v-model="formData.holiday" placeholder="是否节假日">
+          <el-option v-for="holiday in holidayList" :key="holiday.label" :label="holiday.label" :value="holiday.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="smail-select" label="续航里程">
-        <el-select v-model="formData.d" placeholder="续航里程">
-          <el-option label="1" value="shanghai"></el-option>
-          <el-option label="2" value="beijing"></el-option>
+      <el-form-item class="middle-select" label="续航里程">
+        <el-select v-model="formData.mileage" placeholder="续航里程">
+          <el-option v-for="mileage in mileageList" :key="mileage.label" :label="mileage.label" :value="mileage.value"></el-option>
         </el-select>
       </el-form-item>  
+      
       <el-form-item class="smail-select" label="充电桩类型">
-        <el-select v-model="formData.d" placeholder="充电桩类型">
-          <el-option label="1" value="全部"></el-option>
-          <el-option label="2" value="快充"></el-option>
-          <el-option label="3" value="慢充"></el-option>
+        <el-select v-model="formData.chargeType" placeholder="充电桩类型">
+          <el-option v-for="chargeType in chargeTypeList" :key="chargeType.label" :label="chargeType.label" :value="chargeType.value"></el-option>
         </el-select>
       </el-form-item>  
     </el-form>
     <div class="button-box">
         <el-button type="primary" @click="generateEchart">查询</el-button>
-        <el-button type="default">重置</el-button>
+        <el-button type="default" >重置</el-button>
     </div>
-    <!-- <br />
-    <el-radio v-model="radio" label="1">显示百分比</el-radio>
-    <el-radio v-model="radio" label="2">显示数量</el-radio> -->
   </div>
 </template>
 
 <script>
+import {selectBaseInfoListTree} from '@/api/dictionary'
 export default {
   name: "topForm-charge",
   data() {
     return {
       formData: {
-        value: "",
-        a: "",
-        b: "",
-        c: "",
-        d: "",
-        e: "",
+        brand:'',
+        model:'',
+        config:'',
+        market: "",
+        use: "",
+        holiday: "",
+        mileage: "",
+        monthrange:"",
+        chargeType:"",
       },
-      radio:'1'
+      radio:'1',
+      cascadeList:[],
+      brandList:[],
+      modelList:[],
+      configList:[],
+      marketList:[
+        {label:'全部',value:''},
+        {label:'A00级',value:'A00级'},
+        {label:'A0级',value:'A0级'},
+        {label:'A级',value:'A级'},
+        {label:'B级',value:'B级'},
+        {label:'C级',value:'C级'},
+      ],
+      useList:[
+        {label:'全部',value:''},
+        {label:'非运营',value:'非运营'},
+        {label:'运营',value:'运营'},
+      ],
+      holidayList:[
+        {label:'全部',value:''},
+        {label:'非节假日',value:'非节假日'},
+        {label:'节假日',value:'节假日'},
+      ],
+      mileageList:[
+        {label:'全部',value:''},
+        {label:'400km',value:'400'},
+        {label:'500km',value:'500'},
+        {label:'600km',value:'600'},
+        {label:'800km',value:'800'},
+      ],
+      chargeTypeList:[
+        {label:'全部',value:''},
+        {label:'快充',value:'快充'},
+        {label:'慢充',value:'慢充'},
+      ],
     };
   },
   props:['activeName'],
+  watch:{
+    "formData.brand":{
+      handler(newVal){
+        this.formData.model = ''
+        if(newVal){
+          this.modelList = newVal.child
+        }else{
+          this.changeBrand()
+        }
+      },
+      deep: true,
+    },
+    "formData.model":{
+      handler(newVal){
+        this.formData.config = ''
+        if(newVal){
+          this.configList = newVal.child 
+        }else{
+          this.changeModel()
+        }
+      },
+      deep: true,
+    }
+  },
+  mounted(){
+    this.getBaseInfoListTree()
+  },
   methods:{
     generateEchart(){
       this.$emit('generateEchart',this.formData)
+    },
+    getBaseInfoListTree(){
+      selectBaseInfoListTree().then(res=>{
+        this.brandList = res.data.data
+        this.changeBrand()
+        this.changeModel()
+      })
+    },
+    changeBrand(){
+      let modelList = []
+      this.brandList.forEach(brand=>{
+        brand.child.forEach(model=>{
+          modelList.push(model)
+        })
+      })
+      this.modelList = modelList
+    },
+    changeModel(){
+      let configList = []
+      this.modelList.forEach(model=>{
+        configList.push(model)
+      })
+      this.configList = configList
     }
   }
 };
@@ -101,5 +186,11 @@ export default {
   }
   .middle-select{
     width: 159px;
+  }
+  .middle-date{
+    width: 224px;
+  }
+  .el-date-editor--monthrange.el-input, .el-date-editor--monthrange.el-input__inner{
+    width: 100%;
   }
 </style>

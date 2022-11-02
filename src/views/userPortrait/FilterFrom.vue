@@ -33,9 +33,10 @@
       </el-form-item>
       <el-form-item class="middle-date" label="时间范围">
         <el-date-picker
-          v-model="formData.b"
+          v-model="formData.monthrange"
           type="monthrange"
           range-separator="-"
+          value-format="yyyy-MM"
           start-placeholder="开始月份"
           end-placeholder="结束月份"
         >
@@ -66,14 +67,14 @@ export default {
   data() {
     return {
       formData: {
-        value: "",
         brand:'',
         model:'',
         config:'',
         market: "",
         use: "",
         mileage: "",
-        price: "",
+        monthrange:"",
+        price:"",
       },
       radio:'1',
       cascadeList:[],
@@ -82,16 +83,21 @@ export default {
       configList:[],
       marketList:[
         {label:'全部',value:''},
-        {label:'A00级',value:'A00'},
-        {label:'AO级',value:'A0'},
-        {label:'A级',value:'A'},
-        {label:'B级',value:'B'},
-        {label:'C级',value:'C'},
+        {label:'A00级',value:'A00级'},
+        {label:'A0级',value:'A0级'},
+        {label:'A级',value:'A级'},
+        {label:'B级',value:'B级'},
+        {label:'C级',value:'C级'},
       ],
       useList:[
         {label:'全部',value:''},
         {label:'非运营',value:'非运营'},
         {label:'运营',value:'运营'},
+      ],
+      holidayList:[
+        {label:'全部',value:''},
+        {label:'非节假日',value:'非节假日'},
+        {label:'节假日',value:'节假日'},
       ],
       mileageList:[
         {label:'全部',value:''},
@@ -99,6 +105,11 @@ export default {
         {label:'500km',value:'500'},
         {label:'600km',value:'600'},
         {label:'800km',value:'800'},
+      ],
+      chargeTypeList:[
+        {label:'全部',value:''},
+        {label:'快充',value:'快充'},
+        {label:'慢充',value:'慢充'},
       ],
       priceList:[
         {label:'全部',value:''},
@@ -138,7 +149,6 @@ export default {
   },
   methods:{
     generateEchart(){
-      console.log(this.formData)
       this.$emit('generateEchart',this.formData)
     },
     getBaseInfoListTree(){

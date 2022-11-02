@@ -56,3 +56,9 @@ export const getObjType = obj => {
     document.body.removeChild(a)
   }
   
+//获取当月最后一天的日期
+export function getLastDay(y,m){
+  var d = new Date(y, m, 0).getDate(); //获取当月最后一日
+  d = d < 10 ? '0' + d : d; //日数补 0
+  return [y,m,d].join("-")
+}

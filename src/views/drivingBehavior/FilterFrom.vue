@@ -33,9 +33,10 @@
       </el-form-item>
       <el-form-item class="" label="时间范围">
         <el-date-picker
-          v-model="formData.b"
+          v-model="formData.monthrange"
           type="monthrange"
           range-separator="-"
+          value-format="yyyy-MM"
           start-placeholder="开始月份"
           end-placeholder="结束月份"
         >
@@ -56,9 +57,6 @@
         <el-button type="primary" @click="generateEchart">查询</el-button>
         <el-button type="default" >重置</el-button>
     </div>
-    <!-- <br />
-    <el-radio v-model="radio" label="1">显示百分比</el-radio>
-    <el-radio v-model="radio" label="2">显示数量</el-radio> -->
   </div>
 </template>
 
@@ -69,7 +67,6 @@ export default {
   data() {
     return {
       formData: {
-        value: "",
         brand:'',
         model:'',
         config:'',
@@ -77,6 +74,7 @@ export default {
         use: "",
         holiday: "",
         mileage: "",
+        monthrange:"",
       },
       radio:'1',
       cascadeList:[],
@@ -86,20 +84,20 @@ export default {
       marketList:[
         {label:'全部',value:''},
         {label:'A00级',value:'A00'},
-        {label:'AO级',value:'A0'},
+        {label:'A0级',value:'A0'},
         {label:'A级',value:'A'},
         {label:'B级',value:'B'},
         {label:'C级',value:'C'},
       ],
       useList:[
         {label:'全部',value:''},
-        {label:'非运营',value:'noOperation'},
-        {label:'运营',value:'Operation'},
+        {label:'非运营',value:'非运营'},
+        {label:'运营',value:'运营'},
       ],
       holidayList:[
         {label:'全部',value:''},
-        {label:'非节假日',value:'noHoliday'},
-        {label:'节假日',value:'holiday'},
+        {label:'非节假日',value:'非节假日'},
+        {label:'节假日',value:'节假日'},
       ],
       mileageList:[
         {label:'全部',value:''},
@@ -140,7 +138,6 @@ export default {
   },
   methods:{
     generateEchart(){
-      console.log(this.formData)
       this.$emit('generateEchart',this.formData)
     },
     getBaseInfoListTree(){

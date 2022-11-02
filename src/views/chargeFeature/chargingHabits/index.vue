@@ -48,13 +48,49 @@
         </charts-card>  
       </el-col>
     </el-row>  
+    <el-row :gutter="20" class="pdl-s pdr-s">
+      <strong class="mgl-l mgr-m">充电桩类型</strong> 
+      <el-radio-group v-model="chargeType" size="medium" @change="changeChargeType">
+        <el-radio-button label="慢充"></el-radio-button>
+        <el-radio-button label="快充"></el-radio-button>
+      </el-radio-group>
+    </el-row>  
+    <el-row v-if="chargeType == '慢充'" :gutter="20" class="pdl-s pdr-s">
+      <el-col class="" :span="24">
+        <charts-card :cardInfo="chargingHabits81" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-81" id="chart-charging-habits-81"></div>
+        </charts-card>  
+      </el-col>
+    </el-row>  
+    <el-row v-if="chargeType == '快充'" :gutter="20" class="pdl-s pdr-s">
+      <el-col class="" :span="24">
+        <charts-card :cardInfo="chargingHabits82" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-82" id="chart-charging-habits-82"></div>
+        </charts-card>  
+      </el-col>
+    </el-row>  
+    <el-row v-if="chargeType == '慢充'" :gutter="20" class="pdl-s pdr-s">
+      <el-col class="" :span="24">
+        <charts-card :cardInfo="chargingHabits91" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-91" id="chart-charging-habits-91"></div>
+        </charts-card>  
+      </el-col>
+    </el-row>  
+    <el-row v-if="chargeType == '快充'" :gutter="20" class="pdl-s pdr-s">
+      <el-col class="" :span="24">
+        <charts-card :cardInfo="chargingHabits92" :viewType='viewType'>
+          <div slot="chart" class="echart-view" ref="chart-charging-habits-92" id="chart-charging-habits-92"></div>
+        </charts-card>  
+      </el-col>
+    </el-row>  
   </div>
 </template>
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
   import {selectSOCDistributionOfSecondaryCharge, selectSecondaryChargeEnergyDistribution, selectTimeDistributionOfSecondaryCharging,
-    selectWeeklyChargingFrequency, selectChargingTimesPerDay, selectNumberOfChargingPoints, selectPercentageOfMaximumChargingLocations} from '@/api/chargingBehavior'
+    selectWeeklyChargingFrequency, selectChargingTimesPerDay, selectNumberOfChargingPoints, selectPercentageOfMaximumChargingLocations,
+    selectDurationOfEachCharge, selectChargingPower} from '@/api/chargingBehavior'
   export default {
     name: 'chargingHabits',
     components:{
@@ -64,6 +100,7 @@
       return{
         name:'',
         isNum:false,
+        chargeType:'慢充',
         chartOption:{
           title: {
             text: '',
@@ -116,10 +153,10 @@
           seriesPercentData:[],
           title:'次充电电量分布',
           subTitleNum:'统计充电次数',
-          subTitlePercent:'统计出行车辆占比',
+          subTitlePercent:'统计充电次数占比',
           chartTitle:'次充电电量(度)',
           definition:'统计期间内每辆车每次充电的电量。计算逻辑为统计期间内每辆车每次充电结束时的电量-该次充电开始时的电量。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          range:'',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -130,8 +167,8 @@
           seriesPercentData1: [],
           seriesPercentData2: [],
           title:'次充电时刻分布',
-          subTitleNum:'统计充电次数占比',
-          subTitlePercent:'统计充电次数',
+          subTitleNum:'统计充电次数',
+          subTitlePercent:'统计充电次数占比',
           chartTitle:'次充电时刻(时)',
           definition:'统计期间内每辆车每次充电的开始/结束时间。',
           range:'0-1:≥0:00-<01:00,1-2:≥01:00-<02:00',
@@ -147,7 +184,7 @@
           subTitlePercent:'统计车辆占比',
           chartTitle:'每周充电频率(次)',
           definition:'统计期间内每辆车每周充电的总次数。',
-          range:'0-1:≥0:00-<01:00,1-2:≥01:00-<02:00',
+          range:'0:每周充电0次,1:每周充电1次',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -162,7 +199,7 @@
           subTitlePercent:'统计车辆占比',
           chartTitle:'单日充电次数(次)',
           definition:'每辆车在统计期间内单日充电次数的最大值/次大值。',
-          range:'横轴取值范围:0:0次,1:1次',
+          range:'0:0次,1:1次',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -171,11 +208,11 @@
           seriesNumData:[],
           seriesPercentData:[],
           title:'充电地点数分布',
-          subTitleNum:'统计出行车辆',
-          subTitlePercent:'统计出行车辆占比',
+          subTitleNum:'统计充电地点',
+          subTitlePercent:'统计充电地点占比',
           chartTitle:'充电地点数(个)',
           definition:'统计期间内每辆车使用过的充电地点数量。',
-          range:'0-5, 5-10, 10-15, 15-20, 20-25, 25-30, 30-35, 35-40, 40-45, 45-50, 50-55, 55-60, 60-65, 65-70, 70及以上',
+          range:'',
           coverRate:'90%',
           dataTotal:'45961',
         },
@@ -192,7 +229,7 @@
           coverRate:'90%',
           dataTotal:'45961',
         },
-        chargingHabits8:{
+        chargingHabits81:{
           xAxisData:['4小时以下','4-4.5小时','4.5-5小时','5-5.5小时','5.5-6小时','6-6.5小时','6.5-7小时','7-7.5小时','7.5-8小时','8小时及以上'],
           seriesNumData:[],
           seriesPercentData:[],
@@ -205,36 +242,60 @@
           coverRate:'90%',
           dataTotal:'45961',
         },
-        chargingHabits9:{
-          xAxisData:['0-10分钟', '10-20分钟', '20-30分钟', '40-50分钟', '50-60分钟', '60-70分钟','70-80分钟','80-90分钟','90-100分钟','100-110分钟','110-120分钟','120分钟及以上'],
+        chargingHabits82:{
+          xAxisData:['0-10分钟','10-20分钟','20-30分钟','30-40分钟','40-50分钟','50-60分钟','60-70分钟','70-80分钟','80-90分钟','90-100分钟','100-110分钟','110-120分钟','120分钟及以上',],
           seriesNumData:[],
           seriesPercentData:[],
           title:'次充电时长分布',
           subTitleNum:'统计充电次数',
           subTitlePercent:'统计充电次数占比',
-          chartTitle:'快充充电时长(h)',
+          chartTitle:'快充充电时长(min)',
           definition:'统计期间内每辆车每次充电的时长。',
-          range:'4小时以下:<4h,4-4.5小时:≥4h-<5h',
+          range:'0-10分钟:小于10分钟,10-20分钟:≥10min-<20min',
+          coverRate:'90%',
+          dataTotal:'45961',
+        },
+        chargingHabits91:{
+          xAxisData:['3.6','7.2','11'],
+          seriesNumData1:[],
+          seriesPercentData1:[],
+          seriesNumData2:[],
+          seriesPercentData2:[],
+          title:'次充电时长分布',
+          subTitleNum:'统计充电次数',
+          subTitlePercent:'统计充电次数占比',
+          chartTitle:'慢充充电功率(kw)',
+          definition:'统计期间内每辆车每次充电时的峰值/平均功率。',
+          range:'',
+          coverRate:'90%',
+          dataTotal:'45961',
+        },
+        chargingHabits92:{
+          xAxisData:['10','20','30','40','50','60','70','80','90','100','110','120','130','140','150','160','170','180'],
+          seriesNumData1:[],
+          seriesPercentData1:[],
+          seriesNumData2:[],
+          seriesPercentData2:[],
+          title:'次充电时长分布',
+          subTitleNum:'统计充电次数',
+          subTitlePercent:'统计充电次数占比',
+          chartTitle:'快充充电功率(kw)',
+          definition:'统计期间内每辆车每次充电时的峰值/平均功率。',
+          range:'',
           coverRate:'90%',
           dataTotal:'45961',
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()
       })
     },
     watch:{
-      viewType(newVal){
-        this.generateChartChargingHabits1()
-        this.generateChartChargingHabits2()
-        this.generateChartChargingHabits3()
-        this.generateChartChargingHabits4()
-        this.generateChartChargingHabits5()
-        this.generateChartChargingHabits6()
-        this.generateChartChargingHabits7()
+      viewType(){
+        this.generateEmptyEchart()
       }
     },
     methods:{
@@ -247,6 +308,8 @@
           this.generateChartChargingHabits5()
           this.generateChartChargingHabits6()
           this.generateChartChargingHabits7()
+          this.generateChartChargingHabits81()
+          this.generateChartChargingHabits91()
         })
       },
       generateEchart(){
@@ -257,14 +320,18 @@
         this.getChargingHabitsData5()
         this.getChargingHabitsData6()
         this.getChargingHabitsData7()
+        this.getChargingHabitsData8()
+        this.getChargingHabitsData9()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
           resolve(true)
         })
       },
+
+      //次充电SOC分布
       getChargingHabitsData1(){
-        selectSOCDistributionOfSecondaryCharge().then((res)=>{
+        selectSOCDistributionOfSecondaryCharge(this.formDataParams).then((res)=>{
           this.chargingHabits1.seriesNumData1 = res.data.data.yStartValueDataList
           this.chargingHabits1.seriesNumData2 = res.data.data.yFortyValueDataList
           this.chargingHabits1.seriesPercentData1 = res.data.data.yEndValueDataList
@@ -362,8 +429,9 @@
         myChart.setOption(chartOption);
       },
 
+      //次充电电量分布
       getChargingHabitsData2(){
-        selectSecondaryChargeEnergyDistribution().then((res)=>{
+        selectSecondaryChargeEnergyDistribution(this.formDataParams).then((res)=>{
           this.chargingHabits2.seriesNumData = res.data.data.yValueDataList
           this.chargingHabits2.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -410,7 +478,7 @@
 
       //次充电时刻分布
       getChargingHabitsData3(){
-        selectTimeDistributionOfSecondaryCharging().then((res)=>{
+        selectTimeDistributionOfSecondaryCharging(this.formDataParams).then((res)=>{
           this.chargingHabits3.seriesNumData1 = res.data.data.yStartValueDataList
           this.chargingHabits3.seriesNumData2 = res.data.data.yFortyValueDataList
           this.chargingHabits3.seriesPercentData1 = res.data.data.yEndValueDataList
@@ -508,8 +576,9 @@
         myChart.setOption(chartOption);
       },
 
+      //周充电频次分布
       getChargingHabitsData4(){
-        this.getDataFuntion().then((res)=>{
+        selectWeeklyChargingFrequency(this.formDataParams).then((res)=>{
           this.chargingHabits4.seriesNumData = res.data.data.yValueDataList
           this.chargingHabits4.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -549,12 +618,13 @@
         myChart.setOption(chartOption);
       },
 
+      //单日充电次数分布
       getChargingHabitsData5(){
-        this.getDataFuntion().then((res)=>{
-          this.chargingHabits5.seriesNumData1 = res.data.data.yFortyValueDataList
-          this.chargingHabits5.seriesNumData2 = res.data.data.yFortyValueDataList
-          this.chargingHabits5.seriesPercentData1 = res.data.data.yFortyValueDataList
-          this.chargingHabits5.seriesPercentData2 = res.data.data.yFortyValueDataList
+        selectChargingTimesPerDay(this.formDataParams).then((res)=>{
+          this.chargingHabits5.seriesNumData1 = res.data.data.yMaxValueDataList
+          this.chargingHabits5.seriesNumData2 = res.data.data.ySecondValueDataList
+          this.chargingHabits5.seriesPercentData1 = res.data.data.yMaxPropDataList
+          this.chargingHabits5.seriesPercentData2 = res.data.data.ySecondPropDataList
         }).finally(()=>{
           if(this.chargingHabits5.seriesNumData1.length==0){
             this.chargingHabits5.seriesNumData1 = [110,280,210,170,120,90,30,20,10,10]
@@ -648,8 +718,9 @@
         myChart.setOption(chartOption);
       },
 
+      //充电地点数分布
       getChargingHabitsData6(){
-        this.getDataFuntion().then((res)=>{
+        selectNumberOfChargingPoints(this.formDataParams).then((res)=>{
           this.chargingHabits6.seriesNumData = res.data.data.yValueDataList
           this.chargingHabits6.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -678,21 +749,27 @@
         chartOption.series = [
           {
             name: '车辆数量',
-            type: 'line',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
             data:this.viewType?this.chargingHabits6.seriesPercentData:this.chargingHabits6.seriesNumData,
             label: {
               show: true,
               position: 'top',
               formatter:this.viewType?'{c}%':'{c}'
             },
-            areaStyle:{},
           }
         ]
         myChart.setOption(chartOption);
       },
 
+      //最多充电地点占比分布
       getChargingHabitsData7(){
-        this.getDataFuntion().then((res)=>{
+        selectPercentageOfMaximumChargingLocations(this.formDataParams).then((res)=>{
           this.chargingHabits7.seriesNumData = res.data.data.yValueDataList
           this.chargingHabits7.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -717,24 +794,227 @@
           name: this.viewType?'':'(单位:百辆)',
         }
         chartOption.series = [
-            {
-              name: '车辆数量',
-              type: 'bar',
-              barWidth:'20',
-              itemStyle: {
-                normal: {
-                    color:'#3893F9'
-                }
-              },
-              data:this.viewType?this.chargingHabits7.seriesPercentData:this.chargingHabits7.seriesNumData,
-              label: {
-                show: true,
-                position: 'top',
-                formatter:this.viewType?'{c}%':'{c}'
-              },
-            }
-          ]
+          {
+            name: '车辆数量',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.chargingHabits7.seriesPercentData:this.chargingHabits7.seriesNumData,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
         myChart.setOption(chartOption);
+      },
+
+      //次充电时长分布
+      getChargingHabitsData8(){
+        selectDurationOfEachCharge(this.formDataParams).then((res)=>{
+          this.chargingHabits81.seriesNumData = res.data.data.ySlowValueDataList
+          this.chargingHabits81.seriesPercentData = res.data.data.ySlowPropDataList
+          this.chargingHabits82.seriesNumData = res.data.data.yFastValueDataList
+          this.chargingHabits82.seriesPercentData = res.data.data.yFastPropDataList
+        }).finally(()=>{
+          this.generateChartChargingHabits81()
+        })
+      },
+      generateChartChargingHabits81(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-81']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.chargingHabits82.chartTitle
+        chartOption.xAxis = {
+          data:this.chargingHabits81.xAxisData,
+          axisLabel:{interval:'0'}
+        }
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百辆)',
+        }
+        chartOption.series = [
+          {
+            name: '车辆数量',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.chargingHabits81.seriesPercentData:this.chargingHabits81.seriesNumData,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
+        myChart.setOption(chartOption);
+      },
+      generateChartChargingHabits82(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-82']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.chargingHabits82.chartTitle
+        chartOption.xAxis = {
+          data:this.chargingHabits82.xAxisData,
+          axisLabel:{interval:'0'}
+        }
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百辆)',
+        }
+        chartOption.series = [
+          {
+            name: '车辆数量',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.chargingHabits82.seriesPercentData:this.chargingHabits82.seriesNumData,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
+        myChart.setOption(chartOption);
+      },
+
+      //充电功率分布
+      getChargingHabitsData9(){
+        selectChargingPower(this.formDataParams).then((res)=>{
+          this.chargingHabits91.seriesNumData1 = res.data.data.yMaxValueDataList
+          this.chargingHabits91.seriesPercentData1 = res.data.data.yMaxPropDataList
+          this.chargingHabits91.seriesNumData2 = res.data.data.yAvgValueDataList
+          this.chargingHabits91.seriesPercentData2 = res.data.data.yAvgPropDataList
+          this.chargingHabits92.seriesNumData1 = res.data.data.yMaxValueDataList
+          this.chargingHabits92.seriesPercentData1 = res.data.data.yMaxPropDataList
+          this.chargingHabits92.seriesNumData2 = res.data.data.yAvgValueDataList
+          this.chargingHabits92.seriesPercentData2 = res.data.data.yAvgPropDataList
+        }).finally(()=>{
+          this.generateChartChargingHabits91()
+        })
+      },
+      generateChartChargingHabits91(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-91']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.chargingHabits91.chartTitle
+        chartOption.xAxis = {
+          data:this.chargingHabits91.xAxisData,
+          axisLabel:{interval:'0'}
+        }
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百次)',
+        }
+        chartOption.series = [
+          {
+            name: '充电次数',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.chargingHabits91.seriesPercentData1:this.chargingHabits91.seriesNumData1,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          },
+          {
+            name: '充电次数',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#81D82B'
+              }
+            },
+            data:this.viewType?this.chargingHabits91.seriesPercentData2:this.chargingHabits91.seriesNumData2,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
+        myChart.setOption(chartOption);
+      },
+      generateChartChargingHabits92(){
+        var myChart = this.$echarts.init(this.$refs['chart-charging-habits-92']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.chargingHabits92.chartTitle
+        chartOption.xAxis = {
+          data:this.chargingHabits92.xAxisData,
+          axisLabel:{interval:'0'}
+        }
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百次)',
+        }
+        chartOption.series = [
+          {
+            name: '充电次数',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.chargingHabits92.seriesPercentData1:this.chargingHabits92.seriesNumData1,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          },
+          {
+            name: '充电次数',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#81D82B'
+              }
+            },
+            data:this.viewType?this.chargingHabits92.seriesPercentData2:this.chargingHabits92.seriesNumData2,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
+        myChart.setOption(chartOption);
+      },
+
+      //切换快慢充
+      changeChargeType(){
+        if(this.chargeType == "慢充"){
+          this.generateChartChargingHabits81()
+          this.generateChartChargingHabits91()
+        }else{
+          this.generateChartChargingHabits82()
+          this.generateChartChargingHabits92()
+        }
       },
     }
   };
@@ -756,5 +1036,8 @@
   .echart-view{
     width: 100%;
     height: 100%;
+  }
+  .el-radio-button__inner{
+    border-radius: 0 !important;
   }
 </style>

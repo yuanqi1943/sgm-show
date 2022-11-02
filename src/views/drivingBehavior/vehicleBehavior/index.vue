@@ -3,24 +3,24 @@
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="6">
         <charts-card :cardInfo="vehicleBehavior1" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-1" id="chart-driven-distance-1"></div>
+          <div slot="chart" class="echart-view" ref="chart-vehicle-behavior-1" id="chart-vehicle-behavior-1"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="18">
         <charts-card :cardInfo="vehicleBehavior2" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-2" id="chart-driven-distance-2"></div>
+          <div slot="chart" class="echart-view" ref="chart-vehicle-behavior-2" id="chart-vehicle-behavior-2"></div>
         </charts-card>  
       </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
         <charts-card :cardInfo="vehicleBehavior3" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-3" id="chart-driven-distance-3"></div>
+          <div slot="chart" class="echart-view" ref="chart-vehicle-behavior-3" id="chart-vehicle-behavior-3"></div>
         </charts-card>  
       </el-col>
       <el-col class="" :span="12">
         <charts-card :cardInfo="vehicleBehavior4" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-driven-distance-4" id="chart-driven-distance-4"></div>
+          <div slot="chart" class="echart-view" ref="chart-vehicle-behavior-4" id="chart-vehicle-behavior-4"></div>
         </charts-card>  
       </el-col>
     </el-row>  
@@ -112,7 +112,7 @@
           subTitleNum:'续航折算比',
           subTitlePercent:'续航折算比',
           chartTitle:'季节',
-          definition:'每辆车统计期间内实际续航和额定续航的比率。其中春季为3、4、5月，夏季为6、7、8月，秋季为9、10、11月，冬季为12、1、2月。',
+          definition:'每辆车统计期间内实际续航和额定续航的比率。其中春季为3、4、5月,夏季为6、7、8月,秋季为9、10、11月,冬季为12、1、2月。',
           range:'',
           coverRate:'90%',
           dataTotal:'40214',
@@ -132,7 +132,7 @@
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()
@@ -140,10 +140,7 @@
     },
     watch:{
       viewType(newVal){
-        this.generateChartVehicleBehavior1()
-        this.generateChartVehicleBehavior2()
-        this.generateChartVehicleBehavior3()
-        this.generateChartVehicleBehavior4()
+        this.generateEmptyEchart()
       }
     },
     methods:{
@@ -169,11 +166,19 @@
 
       //次均行驶里程
       getVehicleBehavior1(){
-        selectDrivingStyle().then((res)=>{
-          this.vehicleBehavior1.seriesNumData = []
-          this.vehicleBehavior1.seriesPercentData = []
-        }).finally(()=>{
-          if(this.vehicleBehavior1.seriesNumData.length==0){
+        selectDrivingStyle(this.formDataParams).then((res)=>{
+          let valueMap = res.data.data.valueMap
+          let seriesNumData = []
+          for (let key in valueMap) {
+            let obj = {
+              name:key,
+              value:valueMap[key]
+            }
+            seriesNumData.push(obj)
+          }
+          this.vehicleBehavior1.seriesNumData = this.traverseObjToArray(res.data.data.valueMap)
+          this.vehicleBehavior1.seriesPercentData = this.traverseObjToArray(res.data.data.propMap)
+          if(!res.data.data.valueMap){
             this.vehicleBehavior1.seriesNumData = [
               {name:'平稳型',value:600},
               {name:'激进型',value:400},
@@ -183,11 +188,12 @@
               {name:'激进型',value:40},
             ]
           }
+        }).finally(()=>{
           this.generateChartVehicleBehavior1()
         })
       },
       generateChartVehicleBehavior1(){
-        let myChart = this.$echarts.init(this.$refs['chart-driven-distance-1']);
+        let myChart = this.$echarts.init(this.$refs['chart-vehicle-behavior-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
         // chartOption.title.text = this.vehicleBehavior1.chartTitle
@@ -208,10 +214,21 @@
           ]
         myChart.setOption(chartOption);
       },
-
+      //遍历对象到数组
+      traverseObjToArray(valueMap){
+        let arr = []
+        for (let key in valueMap) {
+          let obj = {
+            name:key,
+            value:valueMap[key]
+          }
+          arr.push(obj)
+        }
+        return arr
+      },
       //日均行驶里程
       getVehicleBehavior2(){
-        selectPowerConsumptionHundred().then((res)=>{
+        selectPowerConsumptionHundred(this.formDataParams).then((res)=>{
           this.vehicleBehavior2.seriesNumData = res.data.data.yValueDataList
           this.vehicleBehavior2.seriesPercentData = res.data.data.yPropDataList
         })
@@ -224,7 +241,7 @@
         })
       },
       generateChartVehicleBehavior2(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-2']);
+        var myChart = this.$echarts.init(this.$refs['chart-vehicle-behavior-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.vehicleBehavior2.chartTitle
@@ -259,7 +276,7 @@
 
       //续航折算比
       getVehicleBehavior3(){
-        selectConversionRatioOfEndurance().then((res)=>{
+        selectConversionRatioOfEndurance(this.formDataParams).then((res)=>{
           this.vehicleBehavior3.seriesPercentData1 = res.data.data.ySouthDataList
           this.vehicleBehavior3.seriesPercentData2 = res.data.data.yNorthDataList
         })
@@ -272,7 +289,7 @@
         })
       },
       generateChartVehicleBehavior3(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-3']);
+        var myChart = this.$echarts.init(this.$refs['chart-vehicle-behavior-3']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.vehicleBehavior3.chartTitle
@@ -356,7 +373,7 @@
 
       //月累计行程
       getVehicleBehavior4(){
-        selectActualMileage().then((res)=>{
+        selectActualMileage(this.formDataParams).then((res)=>{
           this.vehicleBehavior4.seriesNumData = res.data.data.yValueDataList
           this.vehicleBehavior4.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
@@ -368,7 +385,7 @@
         })
       },
       generateChartVehicleBehavior4(){
-        var myChart = this.$echarts.init(this.$refs['chart-driven-distance-4']);
+        var myChart = this.$echarts.init(this.$refs['chart-vehicle-behavior-4']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.vehicleBehavior4.chartTitle

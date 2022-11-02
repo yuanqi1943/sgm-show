@@ -90,28 +90,27 @@
         },
       }
     },
-    props:['viewType','formData'],
+    props:['viewType','formDataParams'],
     mounted(){
       this.$nextTick(()=>{
         this.generateEmptyEchart()
       })
     },
     watch:{
-      viewType(newVal){
-        this.generateChartDrivenDistance1()
-        this.generateChartDrivenDistance2()
+      viewType(){
+        this.generateEmptyEchart()
       }
     },
     methods:{
       generateEmptyEchart(){
         this.$nextTick(()=>{
-          this.generateChartDrivenDistance1()
-          this.generateChartDrivenDistance2()
+          this.generateDrivingEnergyData1()
+          this.generateDrivingEnergyData2()
         })
       },
       generateEchart(){
-        this.getDrivenDistanceData1()
-        this.getDrivenDistanceData2()
+        this.getDrivingEnergyData1()
+        this.getDrivingEnergyData2()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
@@ -120,8 +119,8 @@
       },
 
       //次行驶SOC分布
-      getDrivenDistanceData1(){
-        selectSOCDistributionOfTheSecondDrive().then((res)=>{
+      getDrivingEnergyData1(){
+        selectSOCDistributionOfTheSecondDrive(this.formDataParams).then((res)=>{
           this.drivingEnergy1.seriesNumData1 = res.data.data.yStartValueDataList
           this.drivingEnergy1.seriesPercentData1 = res.data.data.yStartPropDataList
           this.drivingEnergy1.seriesNumData2 = res.data.data.yEndValueDataList
@@ -133,10 +132,10 @@
             this.drivingEnergy1.seriesPercentData1 = [4,11,8,5,3,2,1,1,1,1]
             this.drivingEnergy1.seriesPercentData2 = [6,9,8,7,5,4,3,2,1,1]
           }
-          this.generateChartDrivenDistance1()
+          this.generateDrivingEnergyData1()
         })
       },
-      generateChartDrivenDistance1(){
+      generateDrivingEnergyData1(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-energy-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
@@ -220,20 +219,20 @@
       },
 
       //次驾驶百公里电耗分布
-      getDrivenDistanceData2(){
-        selectPowerConsumptionPerHundred().then((res)=>{
+      getDrivingEnergyData2(){
+        selectPowerConsumptionPerHundred(this.formDataParams).then((res)=>{
           this.drivingEnergy2.seriesNumData = res.data.data.yValueDataList
           this.drivingEnergy2.seriesPercentData = res.data.data.yPropDataList
-          this.generateChartDrivenDistance2()
+          this.generateDrivingEnergyData2()
         }).finally(()=>{
           if(this.drivingEnergy2.seriesNumData.length==0){
             this.drivingEnergy2.seriesNumData = [60,120,200,250,200,160,120,80,40,20]
             this.drivingEnergy2.seriesPercentData = [6,12,20,25,20,16,12,8,4,2]
           }
-          this.generateChartDrivenDistance1()
+          this.generateDrivingEnergyData1()
         })
       },
-      generateChartDrivenDistance2(empty){
+      generateDrivingEnergyData2(){
         var myChart = this.$echarts.init(this.$refs['chart-driving-energy-2']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
