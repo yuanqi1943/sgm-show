@@ -48,9 +48,9 @@ export const constantRoutes = [
         name: 'ChargeFeature',
       },
       {
-        path: '/thermoPicture',
-        component: () => import('@/views/thermoPicture/index'),
-        name: 'thermoPicture',
+        path: '/hotmap',
+        component: () => import('@/views/hotmap/index'),
+        name: 'hotmap',
       },
     ]
   },

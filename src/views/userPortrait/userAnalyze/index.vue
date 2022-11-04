@@ -568,7 +568,7 @@
   };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .echart-box{
     padding-top: 15px;
   }

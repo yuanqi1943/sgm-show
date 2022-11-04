@@ -55,7 +55,7 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
-  import chinaMap from "@/assets/map/json/china.json";
+  import chinaMap from "@/assets/map/json/world.json";
   import {selectCarPurchasingCityLevel, selectVehiclePurchasingRegion, selectCarPurchaseAge, selectCarPurchaseTime} from '@/api/userPortrait'
   export default {
     name: 'orderAnalyze',

@@ -13,7 +13,7 @@
         <el-menu-item index="/drivingBehavior">驾驶行为</el-menu-item>
         <el-menu-item index="/chargeFeature">充电特征</el-menu-item>
         <el-menu-item index="/userPortrait">用户画像</el-menu-item>
-        <el-menu-item index="/thermoPicture">热力图</el-menu-item>
+        <el-menu-item index="/hotmap">热力图</el-menu-item>
       </el-menu>
 
     </div>

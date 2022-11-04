@@ -5,7 +5,7 @@
     </el-tabs>
     <div class="app-main">
       <div class="form-box">
-        <filter-from :activeName='activeName' @generateEchart='generateEchart'/>
+        <filter-form :activeName='activeName' @generateEchart='generateEchart'/>
         <el-radio-group class="view-type" v-model="viewType">
           <el-radio :label="true">显示百分比</el-radio>
           <el-radio :label="false">显示数量</el-radio>
@@ -22,13 +22,13 @@
 
 <script>
 import { getLastDay } from '@/util/index'
-import FilterFrom from './FilterFrom.vue'
+import FilterForm from './FilterForm.vue'
 import OrderAnalyze from './orderAnalyze/index.vue'
 import UserAnalyze from './userAnalyze/index.vue'
 export default {
   name: 'userPortrait',
   components: {
-    FilterFrom,
+    FilterForm,
     OrderAnalyze,
     UserAnalyze,
   },
@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .form-box {
     align-items: center;
     background: #fff;
