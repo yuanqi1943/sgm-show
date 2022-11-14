@@ -8,7 +8,7 @@
       </el-col>
 
       <el-col class="" :span="18">
-        <charts-card :cardInfo="orderAnalyze2" :viewType='viewType' :twoChart='true' :proportion='[12,12]'>
+        <charts-card :cardInfo="orderAnalyze2" :viewType='viewType' :twoChart='true' :proportion='[13,11]'>
           <div slot="chart1" class="echart-view" ref="chart-order-analyze-21" id="chart-order-analyze-21"></div>
           <div slot="chart2" class="echart-view" id="chart-order-analyze-22">
             <div class="mgt-l">
@@ -22,7 +22,7 @@
               :data="orderAnalyze2.areaUserTable"
               class="mgt-m"
               style="width: 100%">
-              <el-table-column prop="city" label="城市" width="180"></el-table-column>
+              <el-table-column prop="city" :label="orderAnalyze2.areaUser=='市级'?'城市':'省份'" width="180"></el-table-column>
               <el-table-column prop="amount" label="用户数量" width="180"></el-table-column>
               <el-table-column prop="proportion" label="用户数量占比">
                 <template slot-scope="scope">
@@ -38,15 +38,22 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
-      <el-col class="" :span="18">
-        <charts-card :cardInfo="orderAnalyze3" :viewType='viewType' :twoChart='true' :proportion='[12,12]'>
+      <el-col class="" :span="16">
+        <charts-card :cardInfo="orderAnalyze3" :viewType='viewType' :twoChart='true' :proportion='[10,14]'>
           <div slot="chart1" class="echart-view" ref="chart-order-analyze-31" id="chart-order-analyze-31"></div>
           <div slot="chart2" class="echart-view" ref="chart-order-analyze-32" id="chart-order-analyze-32"></div>
         </charts-card>  
       </el-col>
-      <el-col class="" :span="6">
+      <el-col class="" :span="8">
         <charts-card :cardInfo="orderAnalyze4" :viewType='viewType'>
-          <div slot="chart" class="echart-view" ref="chart-order-analyze-4" id="chart-order-analyze-4"></div>
+          <div class="inline-block mgl-l" slot="select">
+            <el-radio-group v-model="orderAnalyze4.timeType" size="medium" @change="changeTimeType">
+              <el-radio-button label="年度"></el-radio-button>
+              <el-radio-button label="月度"></el-radio-button>
+            </el-radio-group>
+          </div>
+          <div slot="chart" v-if="orderAnalyze4.timeType == '年度'" class="echart-view" ref="chart-order-analyze-41" id="chart-order-analyze-41"></div>
+          <div slot="chart" v-if="orderAnalyze4.timeType == '月度'" class="echart-view" ref="chart-order-analyze-42" id="chart-order-analyze-42"></div>
         </charts-card>  
       </el-col>
     </el-row>
@@ -55,7 +62,7 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
-  import chinaMap from "@/assets/map/json/world.json";
+  import chinaMap from "@/assets/map/json/china.json";
   import {selectCarPurchasingCityLevel, selectVehiclePurchasingRegion, selectCarPurchaseAge, selectCarPurchaseTime} from '@/api/userPortrait'
   export default {
     name: 'orderAnalyze',
@@ -143,8 +150,8 @@
           seriesNumData2:[],
           seriesPercentData2:[],
           title:'购车年龄分布',
-          subTitleNum:'用户数量',
-          subTitlePercent:'用户数量占比',
+          subTitleNum:'订单数量',
+          subTitlePercent:'订单数量占比',
           chartTitle:'购车年龄(岁)',
           definition:'统计每辆车车主当前的年龄。',
           range:'',
@@ -152,15 +159,17 @@
           dataTotal:'45961',
         },
         orderAnalyze4:{
-          xAxisData:['20以下', '21-25', '26-30', '31-35', '36-40', '41-45','46-50','51-55','56-60','61及以上'],
+          xAxisData1:[],
+          xAxisData2:[],
           seriesNumData1:[],
           seriesPercentData1:[],
           seriesNumData2:[],
           seriesPercentData2:[],
-          title:'购车年龄分布',
-          subTitleNum:'用户数量',
-          subTitlePercent:'用户数量占比',
-          chartTitle:'购车年龄(岁)',
+          timeType:'月度',
+          title:'购车时间',
+          subTitleNum:'订单数量',
+          subTitlePercent:'订单数量占比',
+          chartTitle:'购车月份(月)',
           definition:'统计每辆车车主当前的年龄。',
           range:'',
           coverRate:'90%',
@@ -186,12 +195,14 @@
            this.generateChartOrderAnalyze2()
            this.generateChartOrderAnalyze31()
            this.generateChartOrderAnalyze32()
+           this.generateChartOrderAnalyze42()
         })
       },
       generateEchart(){
         this.getOrderAnalyze1()
         this.getOrderAnalyze2()
         this.getOrderAnalyze3()
+        this.getOrderAnalyze4()
       },
       getDataFuntion(){
         return new Promise((resolve, reject) => {
@@ -309,7 +320,7 @@
               {city:'四川',amount:6200,proportion:13},
               {city:'河南',amount:3900,proportion:13},
               {city:'山东',amount:3700,proportion:13},
-              {city:'附件',amount:3100,proportion:13},
+              {city:'福建',amount:3100,proportion:13},
             ]
             areaUserProv.forEach((item,index)=>{
               if(index == 0){
@@ -364,14 +375,14 @@
                     },
                 },
                 scaleLimit:{
-                  min:1.25
+                  min:1.1
                 } 
             },
                  series : [
                     {
                       type: 'scatter',
                       coordinateSystem: 'geo',
-                      symbolSize: 20,
+                      symbolSize: 15,
                       symbol: 'none',
                       symbolRotate: 55,
                       label: {
@@ -441,34 +452,45 @@
           this.generateChartOrderAnalyze32()
         })
       },
-
       generateChartOrderAnalyze31(){
         let myChart = this.$echarts.init(this.$refs['chart-order-analyze-31']);
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
+        chartOption.legend = {
+          data: ['70后', '80后','90后','00后','其他'],
+          left: 'center',
+          top: '20px'
+        },
         chartOption.series = [
-            {
-              name: '年龄',
-              type: 'pie',
-              radius: '50%',
-              data: this.viewType?this.orderAnalyze3.seriesPercentData1:this.orderAnalyze3.seriesNumData1,
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 1,
-                  shadowColor: 'rgba(0, 0, 0, 0.2)'
-                }
+          {
+            name: '年龄',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            data: this.viewType?this.orderAnalyze3.seriesPercentData1:this.orderAnalyze3.seriesNumData1,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 1,
+                shadowColor: 'rgba(0, 0, 0, 0.2)'
               }
-            }
-          ]
+            },
+            label: {
+              position: 'inner',
+              fontSize: 14,
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
         myChart.setOption(chartOption);
       },
-
       generateChartOrderAnalyze32(){
         let myChart = this.$echarts.init(this.$refs['chart-order-analyze-32']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
         chartOption.title.text = this.orderAnalyze3.chartTitle
+        chartOption.axisLabel = {
+          interval:0
+        }
         chartOption.xAxis = {
           data:this.orderAnalyze3.xAxisData,
           axisLabel:{interval:'0'}
@@ -487,7 +509,7 @@
                   color:'#3893F9'
               }
             },
-            data:this.viewType?this.orderAnalyze3.seriesPercentData:this.orderAnalyze3.seriesNumData,
+            data:this.viewType?this.orderAnalyze3.seriesPercentData2:this.orderAnalyze3.seriesNumData2,
             label: {
               show: true,
               position: 'top',
@@ -496,12 +518,98 @@
           },
         ]
         myChart.setOption(chartOption);
+      },
+
+      //购车时间
+      getOrderAnalyze4(){
+        selectCarPurchaseTime().then((res)=>{
+          this.orderAnalyze4.xAxisData1 = res.data.data.xYearList
+          this.orderAnalyze4.xAxisData2 = res.data.data.xMonthList
+          this.orderAnalyze4.seriesNumData1 = res.data.data.yMonthValueDataList
+          this.orderAnalyze4.seriesPercentData1 = res.data.data.yYearPropDataList
+          this.orderAnalyze4.seriesNumData2 = res.data.data.yValueDataList
+          this.orderAnalyze4.seriesPercentData2 = res.data.data.yMonthPropDataList
+        })
+        .finally(()=>{
+          this.generateChartOrderAnalyze42()
+        })
+      },
+      //年度
+      generateChartOrderAnalyze41(){
+        let myChart = this.$echarts.init(this.$refs['chart-order-analyze-41']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.orderAnalyze4.chartTitle
+        chartOption.xAxis = {
+          data:this.orderAnalyze4.xAxisData1,
+          axisLabel:{interval:'0'}
+        } 
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百单)',
+        }
+        chartOption.series = [
+          {
+            name: '订单数量',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.orderAnalyze4.seriesPercentData1:this.orderAnalyze4.seriesNumData1,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          },
+        ]
+        myChart.setOption(chartOption);
+      },
+      //月度
+      generateChartOrderAnalyze42(){
+        let myChart = this.$echarts.init(this.$refs['chart-order-analyze-42']);
+        // 绘制图表
+        let chartOption = this.deepClone(this.chartOption)
+        chartOption.title.text = this.orderAnalyze4.chartTitle
+        chartOption.xAxis = {
+          data:this.orderAnalyze4.xAxisData2,
+          axisLabel:{interval:'0'}
+        } 
+        chartOption.yAxis = {
+          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          name: this.viewType?'':'(单位:百单)',
+        }
+        chartOption.series = [
+          {
+            name: '订单数量',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.orderAnalyze4.seriesPercentData2:this.orderAnalyze4.seriesNumData2,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          },
+        ]
+        myChart.setOption(chartOption);
+      },
+      changeTimeType(){
+        this.userAnalyze4.timeType == '月度'? this.generateChartOrderAnalyze42():this.generateChartOrderAnalyze41()
       }
     }
   };
 </script>
 
-<style lang="less">
+<style lang="less" scoped> 
   .echart-box{
     padding-top: 15px;
   }

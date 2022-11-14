@@ -52,6 +52,11 @@ export const constantRoutes = [
         component: () => import('@/views/hotmap/index'),
         name: 'hotmap',
       },
+      {
+        path: '/permission',
+        component: () => import('@/views/permission/index'),
+        name: 'permission',
+      },
     ]
   },
 ]

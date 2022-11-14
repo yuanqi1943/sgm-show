@@ -21,7 +21,8 @@
       </div>
     </div>
     <!-- charts components -->
-    <div class="chart-box" style="width:100%;height:calc(100% - 50px)">
+    <div v-if="title" class="pd-l"><slot name="title"/></div>
+    <div class="chart-box" :style="`width:100%;height:calc(100% - ${title?100:50}px)`">
       <div v-if="cardInfo.subTitlePercent||cardInfo.subTitleNum" class="sub-title">{{viewType?cardInfo.subTitlePercent:cardInfo.subTitleNum}}</div>
       <slot v-if="!twoChart" class="chart" name="chart"/>
       <el-row v-if="twoChart" class="">
@@ -49,6 +50,11 @@ export default {
     viewType:{
       type: Boolean,
       required: true,
+    },
+    //存在标题
+    title:{
+      type: Boolean,
+      required: false,
     },
     //多个图表
     twoChart:{
@@ -100,6 +106,7 @@ export default {
     .info-icon{
       vertical-align:top;
       margin-left: 5px;
+      margin-top: 1px;
     }
     .info-right{
       font-size: 14px;

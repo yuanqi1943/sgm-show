@@ -1,3 +1,61 @@
+//更改原始按钮颜色
+@import './variables.less';
+
+
+.el-button:focus, .el-button:hover{
+  color: @primaryColor;
+  border-color: #C2e3FF;
+  background-color:#fff;
+}
+.el-button.is-active, .el-button:active{
+  color: @primaryColor;
+  border-color: #9CD2FF;
+  background-color:#F5F9FD
+}
+
+.el-button--primary{
+  color:#fff;
+  background-color: @primaryColor;
+  border-color: @primaryColor;
+}
+.el-button--primary:hover, .el-button--primary:focus {
+  color:#fff;
+  background-color: #1C80D3;
+  border-color: #1C80D3;
+}
+.el-button--primary.is-active, .el-button--primary:active{
+  color:#fff;
+  background-color: #0266B9;
+  border-color: #0266B9;
+}
+
+.el-dialog{
+  border-radius: 6px;
+  border: 1px solid #D4D8E3;
+}
+.el-dialog__header {
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid #D4D8E3;
+}
+.el-dialog__footer{
+  padding: 16px 20px;
+  text-align: center;
+  box-sizing: border-box;
+  border-top: 1px solid #D4D8E3;
+}
+.el-table{
+  color: inherit;
+}
+
+.el-step__title.is-process{
+  color: inherit;
+  border-color: #7f8698;
+  font-weight: 500;
+}
+// .el-step__icon.is-text{
+//   border: 2px solid #7f8698;
+// }
+
 .sidebar-menu{
     width: 190px;
     background-color: #191f4e;
@@ -32,5 +90,45 @@
   .info-title {
     color: #0c1243;
     margin-right: 5px;
+  }
+}
+
+.form-box {
+  align-items: center;
+  background: #fff;
+  padding: 12px 15px 0 15px;
+  .el-form{
+      width: 1430px !important;
+  }
+  .el-form-item{
+      margin-bottom: 5px;
+  }
+  .el-form--label-top .el-form-item__label {
+    padding: 0;
+    line-height: 24px;
+  }
+  .button-box{
+    padding-top: 24px;
+    width: 260px;
+  }
+  .view-type{
+    padding-top: 10px;
+    margin-bottom: 10px;
+  }
+  .small-select{
+    width: 120px;
+    margin-right: 4px;
+  }
+  .middle-select{
+    width: 159px;
+  }
+  .middle-date{
+    width: 224px;
+  }
+  .big-date{
+    width: 300px;
+  }
+  .el-date-editor--monthrange.el-input, .el-date-editor--monthrange.el-input__inner{
+    width: 100%;
   }
 }

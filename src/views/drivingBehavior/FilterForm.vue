@@ -31,7 +31,7 @@
           <el-option v-for="use in useList" :key="use.label" :label="use.label" :value="use.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="" label="时间范围">
+      <el-form-item class="middle-date" label="时间范围">
         <el-date-picker
           v-model="formData.monthrange"
           type="monthrange"
@@ -54,18 +54,23 @@
       </el-form-item>  
     </el-form>
     <div class="button-box">
-        <el-button type="primary" @click="generateEchart">查询</el-button>
-        <el-button type="default" >重置</el-button>
+        <el-button type="primary" :loading="isLoading" @click="generateEchart">查询</el-button>
+        <el-button type="default" @click="reset">重置</el-button>
+        <el-button type="default" @click="donwloadOpen">下载</el-button>
     </div>
+    <donwload-modal ref="donwloadModal" :chartOptions="activeName" :formDataParams='formDataParams'/>
   </div>
 </template>
 
 <script>
 import {selectBaseInfoListTree} from '@/api/dictionary'
+import DonwloadModal from '@/components/donwloadModal.vue'
 export default {
   name: "topForm-charge",
+  components:{DonwloadModal},
   data() {
     return {
+      dialogVisible:false,
       formData: {
         brand:'',
         model:'',
@@ -108,7 +113,7 @@ export default {
       ]
     };
   },
-  props:['activeName'],
+  props:['activeName','isLoading','formDataParams'],
   watch:{
     "formData.brand":{
       handler(newVal){
@@ -162,17 +167,26 @@ export default {
         configList.push(model)
       })
       this.configList = configList
-    }
+    },
+    reset(){
+      this.formData = {
+        brand:'',
+        model:'',
+        config:'',
+        market: "",
+        useType: "",
+        holiday: "",
+        range: "",
+        monthrange:"",
+      }
+      this.$emit('resetViewType')
+    },
+    donwloadOpen(){
+      this.$refs['donwloadModal'].open()
+    },
   }
 };
 </script>
 
 <style lang="less">
-  .small-select{
-    width: 120px;
-    margin-right: 4px;
-  }
-  .middle-select{
-    width: 159px;
-  }
 </style>

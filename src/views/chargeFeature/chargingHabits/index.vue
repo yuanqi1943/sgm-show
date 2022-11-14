@@ -261,7 +261,7 @@
           seriesPercentData1:[],
           seriesNumData2:[],
           seriesPercentData2:[],
-          title:'次充电时长分布',
+          title:'次充电功率分布',
           subTitleNum:'统计充电次数',
           subTitlePercent:'统计充电次数占比',
           chartTitle:'慢充充电功率(kw)',
@@ -276,7 +276,7 @@
           seriesPercentData1:[],
           seriesNumData2:[],
           seriesPercentData2:[],
-          title:'次充电时长分布',
+          title:'次充电功率分布',
           subTitleNum:'统计充电次数',
           subTitlePercent:'统计充电次数占比',
           chartTitle:'快充充电功率(kw)',
@@ -829,13 +829,13 @@
         var myChart = this.$echarts.init(this.$refs['chart-charging-habits-81']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)
-        chartOption.title.text = this.chargingHabits82.chartTitle
+        chartOption.title.text = this.chargingHabits81.chartTitle
         chartOption.xAxis = {
           data:this.chargingHabits81.xAxisData,
           axisLabel:{interval:'0'}
         }
         chartOption.yAxis = {
-          axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
+          // axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百辆)',
         }
         chartOption.series = [
@@ -920,9 +920,14 @@
           axisLabel:{formatter:this.viewType?'{value}%':'{value}'},
           name: this.viewType?'':'(单位:百次)',
         }
+        chartOption.legend = {
+          data: ['峰值充电功率', '平均冲抵啊功率'],
+          top: '20px',
+          left: 'center',
+        },
         chartOption.series = [
           {
-            name: '充电次数',
+            name: '峰值充电功率',
             type: 'bar',
             barWidth:'20',
             itemStyle: {
@@ -938,7 +943,7 @@
             },
           },
           {
-            name: '充电次数',
+            name: '平均冲抵啊功率',
             type: 'bar',
             barWidth:'20',
             itemStyle: {

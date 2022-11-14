@@ -14,7 +14,11 @@
     </el-row>
     <el-row :gutter="20" class="pdl-s pdr-s">
       <el-col class="" :span="12">
-        <charts-card :cardInfo="vehicleBehavior3" :viewType='viewType'>
+        <charts-card :cardInfo="vehicleBehavior3" :viewType='viewType' :title='true'>
+          <div slot="title" class="text-bold">
+            <span>南方续航折算比: <span class="color-blueText mgl-s text-bold">84%</span> </span>
+            <span class="mgl-l">北方续航折算比: <span class="color-blueText mgl-s text-bold">82%</span> </span>
+          </div>
           <div slot="chart" class="echart-view" ref="chart-vehicle-behavior-3" id="chart-vehicle-behavior-3"></div>
         </charts-card>  
       </el-col>
@@ -178,30 +182,35 @@
           }
           this.vehicleBehavior1.seriesNumData = this.traverseObjToArray(res.data.data.valueMap)
           this.vehicleBehavior1.seriesPercentData = this.traverseObjToArray(res.data.data.propMap)
-          if(!res.data.data.valueMap){
-            this.vehicleBehavior1.seriesNumData = [
-              {name:'平稳型',value:600},
-              {name:'激进型',value:400},
-            ]
-            this.vehicleBehavior1.seriesPercentData = [
-              {name:'平稳型',value:60},
-              {name:'激进型',value:40},
-            ]
-          }
+          // if(!res.data.data.valueMap){
+          //   this.vehicleBehavior1.seriesNumData = [
+          //     {name:'平稳型',value:600},
+          //     {name:'激进型',value:400},
+          //   ]
+          //   this.vehicleBehavior1.seriesPercentData = [
+          //     {name:'平稳型',value:60},
+          //     {name:'激进型',value:40},
+          //   ]
+          // }
         }).finally(()=>{
           this.generateChartVehicleBehavior1()
         })
       },
+
       generateChartVehicleBehavior1(){
         let myChart = this.$echarts.init(this.$refs['chart-vehicle-behavior-1']);
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
-        // chartOption.title.text = this.vehicleBehavior1.chartTitle
+        chartOption.legend = {
+          data: ['激烈型', '平稳型'],
+          bottom: '30px',
+          left: 'center',
+        },
         chartOption.series = [
             {
               name: '驾驶风格',
               type: 'pie',
-              radius: '50%',
+              radius: '65%',
               data: this.viewType?this.vehicleBehavior1.seriesPercentData:this.vehicleBehavior1.seriesNumData,
               emphasis: {
                 itemStyle: {
@@ -209,7 +218,12 @@
                   shadowOffsetX: 1,
                   shadowColor: 'rgba(0, 0, 0, 0.2)'
                 }
-              }
+              },
+              label: {
+                position: 'inner',
+                fontSize: 14,
+                formatter:this.viewType?'{c}%':'{c}'
+              },
             }
           ]
         myChart.setOption(chartOption);
@@ -226,6 +240,7 @@
         }
         return arr
       },
+
       //日均行驶里程
       getVehicleBehavior2(){
         selectPowerConsumptionHundred(this.formDataParams).then((res)=>{

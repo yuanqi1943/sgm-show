@@ -5,7 +5,7 @@
     </el-tabs>
     <div class="app-main">
       <div class="form-box">
-        <filter-form :activeName='activeName' @generateEchart='generateEchart'/>
+        <filter-form :activeName='activeName' @generateEchart='generateEchart' @resetViewType='resetViewType'/>
         <el-radio-group class="view-type" v-model="viewType">
           <el-radio :label="true">显示百分比</el-radio>
           <el-radio :label="false">显示数量</el-radio>
@@ -54,6 +54,9 @@ export default {
     setActiveTab(){
       this.activeName = this.childMenuData[0].index
     },
+    resetViewType(){
+      this.viewType = true
+    },
     generateEchart(formData){
       let y,m,lastDay,firstDay
       if(formData.monthrange){
@@ -83,27 +86,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .form-box {
-    align-items: center;
-    background: #fff;
-    padding: 12px 15px 0 15px;
-    .el-form{
-        width: 1430px !important;
-    }
-    .el-form-item{
-        margin-bottom: 5px;
-    }
-    .el-form--label-top .el-form-item__label {
-      padding: 0;
-      line-height: 24px;
-    }
-    .button-box{
-      padding-top: 24px;
-      width: 260px;
-    }
-    .view-type{
-      padding-top: 10px;
-      margin-bottom: 10px;
-    }
-  }
 </style>

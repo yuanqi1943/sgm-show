@@ -217,17 +217,17 @@ import {selectTravelTime, selectSingleDrivingDuration, selectAverageDailyTravelF
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  opacity: 0.3,
-                  color:'#3893F9',
-                },
-                data: [
-                  [{xAxis:'6:00'},{xAxis:'14:00'}],
-                  [{xAxis:'18:00'},{xAxis:'22:00'}]
-                ]
-              },
+              // markArea: {
+              //   silent: true,
+              //   itemStyle: {
+              //     opacity: 0.3,
+              //     color:'#3893F9',
+              //   },
+              //   data: [
+              //     [{xAxis:'6:00'},{xAxis:'14:00'}],
+              //     [{xAxis:'18:00'},{xAxis:'22:00'}]
+              //   ]
+              // },
             }
         ]
         myChart.setOption(chartOption);
@@ -274,17 +274,17 @@ import {selectTravelTime, selectSingleDrivingDuration, selectAverageDailyTravelF
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  opacity: 0.3,
-                  color:'#3893F9',
-                },
-                data: [
-                  [{xAxis:'0:00'},{xAxis:'4:00'}],
-                  [{xAxis:'18:00'},{xAxis:'22:00'}]
-                ]
-              },
+              // markArea: {
+              //   silent: true,
+              //   itemStyle: {
+              //     opacity: 0.3,
+              //     color:'#3893F9',
+              //   },
+              //   data: [
+              //     [{xAxis:'0:00'},{xAxis:'4:00'}],
+              //     [{xAxis:'18:00'},{xAxis:'22:00'}]
+              //   ]
+              // },
             }
         ]
         myChart.setOption(chartOption);

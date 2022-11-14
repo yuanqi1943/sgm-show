@@ -61,8 +61,10 @@
     </el-form>
     <div class="button-box">
         <el-button type="primary" @click="generateEchart">查询</el-button>
-        <el-button type="default" >重置</el-button>
+        <el-button type="default" @click="reset">重置</el-button>
+        <el-button type="default" @click="donwloadOpen">下载</el-button>
     </div>
+    <donwload-modal ref="donwloadModal" :chartOptions="activeName" :formDataParams='formDataParams'/>
   </div>
 </template>
 
@@ -120,7 +122,7 @@ export default {
       ],
     };
   },
-  props:['activeName'],
+  props:['activeName','formDataParams'],
   watch:{
     "formData.brand":{
       handler(newVal){
@@ -174,23 +176,26 @@ export default {
         configList.push(model)
       })
       this.configList = configList
-    }
+    },
+    reset(){
+      this.formData = {
+        brand:'',
+        model:'',
+        config:'',
+        market: "",
+        useType: "",
+        holiday: "",
+        range: "",
+        monthrange:"",
+      }
+      this.$emit('resetViewType')
+    },
+    donwloadOpen(){
+      this.$refs['donwloadModal'].open()
+    },
   }
 };
 </script>
 
-<style lang="less">
-  .small-select{
-    width: 120px;
-    margin-right: 4px;
-  }
-  .middle-select{
-    width: 159px;
-  }
-  .middle-date{
-    width: 224px;
-  }
-  .el-date-editor--monthrange.el-input, .el-date-editor--monthrange.el-input__inner{
-    width: 100%;
-  }
+<style lang="less" scoped>
 </style>

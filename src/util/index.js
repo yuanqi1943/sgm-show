@@ -1,3 +1,27 @@
+import { Message } from 'element-ui';
+
+let messageInstance = null;
+const mainMessage = function DoneMessage(options) {
+  // 如果弹窗已存在先关闭
+  if (messageInstance) {
+    messageInstance.close();
+  }
+  messageInstance = Message(options);
+}
+const arr = ['success', 'warning', 'info', 'error'];
+arr.forEach(function(type) {
+  mainMessage[type] = function(options) {
+    if (typeof options === 'string') {
+      options = {
+        message: options
+      };
+    }
+    options.type = type;
+    return mainMessage(options);
+  };
+});
+export const message = mainMessage;
+
 export const getObjType = obj => {
     var toString = Object.prototype.toString;
     var map = {
@@ -17,44 +41,44 @@ export const getObjType = obj => {
     }
     return map[toString.call(obj)];
   };
-  /**
-   * 对象深拷贝
-   */
-  export const deepClone = data => {
-    var type = getObjType(data);
-    var obj;
-    if (type === "array") {
-      obj = [];
-    } else if (type === "object") {
-      obj = {};
-    } else {
-      // 不再具有下一层次
-      return data;
-    }
-    if (type === "array") {
-      for (var i = 0, len = data.length; i < len; i++) {
-        obj.push(deepClone(data[i]));
-      }
-    } else if (type === "object") {
-      for (var key in data) {
-        obj[key] = deepClone(data[key]);
-      }
-    }
-    return obj;
-  };
-
-  //下载
-  export function downloadFile(file,type='text/csv;charset=utf-8;',filename='download.csv'){
-    const blob = new Blob([file],{type:type})
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.setAttribute('hidden','')
-    a.setAttribute('href',url)
-    a.setAttribute('download',filename)
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+/**
+ * 对象深拷贝
+ */
+export const deepClone = data => {
+  var type = getObjType(data);
+  var obj;
+  if (type === "array") {
+    obj = [];
+  } else if (type === "object") {
+    obj = {};
+  } else {
+    // 不再具有下一层次
+    return data;
   }
+  if (type === "array") {
+    for (var i = 0, len = data.length; i < len; i++) {
+      obj.push(deepClone(data[i]));
+    }
+  } else if (type === "object") {
+    for (var key in data) {
+      obj[key] = deepClone(data[key]);
+    }
+  }
+  return obj;
+};
+
+//下载
+export function downloadFile(file,type='text/csv;charset=utf-8;',filename='download.csv'){
+  const blob = new Blob([file],{type:type})
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.setAttribute('hidden','')
+  a.setAttribute('href',url)
+  a.setAttribute('download',filename)
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}
   
 //获取当月最后一天的日期
 export function getLastDay(y,m){

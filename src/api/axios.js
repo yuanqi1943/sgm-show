@@ -3,7 +3,7 @@ import NProgress from 'nprogress' // progress bar
 import { Message, MessageBox } from 'element-ui'
 import 'nprogress/nprogress.css'
 import qs from 'qs'
-// import store from '@/store' // progress bar style
+import store from '@/store' // progress bar style
 
 
 axios.defaults.timeout = 30000
@@ -20,13 +20,14 @@ NProgress.configure({
 
 // HTTPrequest拦截
 axios.interceptors.request.use(config => {
-  console.log('request')
   NProgress.start() // start progress bar
-  // const isToken = (config.headers || {}).isToken === false
-  // const token = store.getters.access_token
-  // if (token && !isToken) {
-  //   config.headers['Authorization'] = 'Bearer ' + token// token
-  // }
+  const token = store.getters.access_token
+  if (token) {
+    config.headers['token'] = token // token
+  } else if(config.url != '/sgm/api/admin/user/login'){
+    // alertMessage('请先登录')
+    return
+  }
   //上传文件接口content-type设为multipart/form-data
   if (config['Content-Type']) {
     config.headers['Content-Type'] = config['Content-Type']
@@ -54,7 +55,7 @@ function alertMessage(message) {
 
 // HTTPresponse拦截
 axios.interceptors.response.use(res => {
-  console.log('response')
+  console.log(res)
   NProgress.done();
   const status = Number(res.status) || 200
   // success

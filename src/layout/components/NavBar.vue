@@ -18,22 +18,45 @@
 
     </div>
     <div class="navbar-right">
-      <div class="userinfo">欢迎您</div>
+      <div v-if="!access_token" class="userinfo" @click="linkLogin">请登录</div>
+      <div v-else class="userinfo mgl-l">欢迎您</div>
+      <i v-if="access_token" class="el-icon-user-solid text-big mgl-l color-whiteText"></i>
+      <i class="el-icon-s-tools text-big mgl-l color-whiteText" @click="linkPermission"></i>
     </div>
+    <login-modal ref="loginModal"/>
   </div>
 </template>
 
 <script>
+import LoginModal from './LoginModal.vue'
+import { mapGetters } from "vuex";
 export default {
-  components: {},
   data() {
     return {
       activeIndex:'/dashboard'
     };
   },
-  computed: {},
+  components:{
+    LoginModal
+  },
+  computed: {
+    ...mapGetters(["access_token"]),
+  },
+  mounted(){
+    let params = {
+      account:'administrator',
+      password:'123456',
+    }
+    this.$store.dispatch("LoginByUsername", params)
+  },
   methods: {
-  
+    linkPermission(){
+      this.$router.push("/permission")
+      this.activeIndex = ''
+    },
+    linkLogin(){
+      this.$refs.loginModal.open()
+    }
   },
 };
 </script>
@@ -72,6 +95,11 @@ export default {
     font-size: 16px;
     color: #fff;
     line-height: 66px;
+    cursor: pointer;
+  }
+  .navbar-right{
+    display: flex;
+    align-items: center;
   }
   .navmenu {
     height: 48px;

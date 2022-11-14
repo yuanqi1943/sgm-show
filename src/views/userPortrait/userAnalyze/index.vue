@@ -40,7 +40,7 @@
               :data="userAnalyze4.areaUserTable"
               class="mgt-m"
               style="width: 100%">
-              <el-table-column prop="city" label="城市" width="180"></el-table-column>
+              <el-table-column prop="city" :label="userAnalyze4.areaUser=='市级'?'城市':'省份'" width="180"></el-table-column>
               <el-table-column prop="amount" label="用户数量" width="180"></el-table-column>
               <el-table-column prop="proportion" label="用户数量占比">
                 <template slot-scope="scope">
@@ -136,7 +136,7 @@
           title:'用户年龄分布',
           subTitleNum:'用户数量',
           subTitlePercent:'用户数量占比',
-          chartTitle:'百公里电耗(kWh)',
+          chartTitle:'用户年龄(岁)',
           definition:'指标业务定义：统计每辆车车主当前的年龄。',
           range:'',
           coverRate:'90%',
@@ -234,14 +234,15 @@
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
         chartOption.legend = {
-          bottom: '50px',
+          data: ['男性', '女性'],
+          bottom: '20px',
           left: 'center',
         },
         chartOption.series = [
             {
               name: '性别',
               type: 'pie',
-              radius: '50%',
+              radius: '65%',
               data: this.viewType?this.userAnalyze1.seriesPercentData:this.userAnalyze1.seriesNumData,
               label:{
                 show:true,
@@ -301,12 +302,22 @@
         let myChart = this.$echarts.init(this.$refs['chart-user-analyze-21']);
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
+        chartOption.legend = {
+          data: ['70后', '80后','90后','00后','其他'],
+          bottom: '20px',
+          left: 'center',
+        },
         chartOption.series = [
             {
               name: '年龄',
               type: 'pie',
-              radius: '50%',
+              radius: '65%',
               data: this.viewType?this.userAnalyze2.seriesPercentData1:this.userAnalyze2.seriesNumData1,
+              label: {
+                position: 'inner',
+                fontSize: 14,
+                formatter:this.viewType?'{c}%':'{c}'
+              },
               emphasis: {
                 itemStyle: {
                   shadowBlur: 10,
@@ -397,6 +408,11 @@
         var myChart = this.$echarts.init(this.$refs['chart-user-analyze-3']);
         // 绘制图表
         let chartOption = this.deepClone(this.pieChartOption)
+        chartOption.legend = {
+          data: ['超一线', '一线','二线','三线','四线'],
+          left: 'center',
+          top: '20px'
+        },
         chartOption.series = [
             {
               name: '城市级别分布',
@@ -585,22 +601,21 @@
     width: 100%;
     height: 100%;
   }
-  .flex-proportion{
-    display: flex;
-    align-items: center;
-    .area-progress{
-      padding-left: 8px;
-      padding-left: 20px;
-      flex: 1;
-      border-radius: 0;
-      .el-progress-bar__outer{
-        background-color:transparent;
-        border-radius:0;
-      }
-      .el-progress-bar__inner{
-        background-color:#3893F9;
-        border-radius:0;
-      }
-    }
-  }
+  // ::v-deep .flex-proportion{
+  //   display: flex;
+  //   align-items: center;
+  //   .area-progress{
+  //     padding-left: 20px;
+  //     flex: 1;
+  //     border-radius: 0;
+  //     .el-progress-bar__outer{
+  //       background-color:transparent;
+  //       border-radius:0;
+  //     }
+  //     .el-progress-bar__inner{
+  //       background-color:#3893F9;
+  //       border-radius:0;
+  //     }
+  //   }
+  // }
 </style>

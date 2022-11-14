@@ -270,17 +270,17 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  opacity: 0.3,
-                  color:'#3893F9',
-                },
-                data: [
-                  [{xAxis:'30'},{xAxis:'70'}],
-                  [{xAxis:'90'},{xAxis:'110'}]
-                ]
-              },
+              // markArea: {
+              //   silent: true,
+              //   itemStyle: {
+              //     opacity: 0.3,
+              //     color:'#3893F9',
+              //   },
+              //   data: [
+              //     [{xAxis:'30'},{xAxis:'70'}],
+              //     [{xAxis:'90'},{xAxis:'110'}]
+              //   ]
+              // },
             }
         ]
         myChart.setOption(chartOption);
@@ -328,16 +328,16 @@ selectAccumulatedTimesOfRapidAcceleration, selectIdleOrLowSpeedRatio, selectHigh
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  opacity: 0.3,
-                  color:'#3893F9',
-                },
-                data: [
-                  [{xAxis:'70'},{xAxis:'130'}],
-                ]
-              },
+              // markArea: {
+              //   silent: true,
+              //   itemStyle: {
+              //     opacity: 0.3,
+              //     color:'#3893F9',
+              //   },
+              //   data: [
+              //     [{xAxis:'70'},{xAxis:'130'}],
+              //   ]
+              // },
             }
         ]
         myChart.setOption(chartOption);

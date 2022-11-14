@@ -193,9 +193,7 @@
     },
     props:['viewType','formDataParams'],
     mounted(){
-      this.$nextTick(()=>{
-        this.generateEmptyEchart()
-      })
+      this.generateEmptyEchart()
     },
     watch:{
       viewType(){
@@ -215,7 +213,6 @@
         })
       },
       generateEchart(){
-        console.log(this.formDataParams)
         this.getDrivenDistanceData1()
         this.getDrivenDistanceData2()
         this.getDrivenDistanceData3()
@@ -232,15 +229,12 @@
 
       //次均行驶里程
       getDrivenDistanceData1(){
-        console.log(this.formDataParams)
         getAverageMileageDistribution(this.formDataParams).then((res)=>{
           this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance1.seriesNumData.length==0){
-            this.drivenDistance1.seriesNumData = [590, 820, 950, 1100, 1190, 810, 680, 495, 460, 360, 300, 130, 90, 40, 30]
-            this.drivenDistance1.seriesPercentData = [6,10,13,14,15,10,8,7,6,4,3,2,1,1,1]
-          }
+          // this.drivenDistance1.seriesNumData = [590, 820, 950, 1100, 1190, 810, 680, 495, 460, 360, 300, 130, 90, 40, 30]
+          // this.drivenDistance1.seriesPercentData = [6,10,13,14,15,10,8,7,6,4,3,2,1,1,1]
           this.generateChartDrivenDistance1()
         })
       },
@@ -258,23 +252,23 @@
           name: this.viewType?'':'(单位:百辆)',
         }
         chartOption.series = [
-            {
-              name: '出行次数',
-              type: 'bar',
-              barWidth:'20',
-              itemStyle: {
-                normal: {
-                    color:'#3893F9'
-                }
-              },
-              data:this.viewType?this.drivenDistance1.seriesPercentData:this.drivenDistance1.seriesNumData,
-              label: {
-                show: true,
-                position: 'top',
-                formatter:this.viewType?'{c}%':'{c}'
-              },
-            }
-          ]
+          {
+            name: '出行次数',
+            type: 'bar',
+            barWidth:'20',
+            itemStyle: {
+              normal: {
+                  color:'#3893F9'
+              }
+            },
+            data:this.viewType?this.drivenDistance1.seriesPercentData:this.drivenDistance1.seriesNumData,
+            label: {
+              show: true,
+              position: 'top',
+              formatter:this.viewType?'{c}%':'{c}'
+            },
+          }
+        ]
         myChart.setOption(chartOption);
       },
 
@@ -285,10 +279,8 @@
           this.drivenDistance2.seriesPercentData = res.data.data.yPropDataList
         })
         .finally(()=>{
-          if(this.drivenDistance2.seriesNumData.length==0){
-            this.drivenDistance2.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60]
-            this.drivenDistance2.seriesPercentData = [9, 12, 14, 15, 16, 12, 10, 8, 5, 2, 2]
-          }
+          // this.drivenDistance2.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60]
+          // this.drivenDistance2.seriesPercentData = [9, 12, 14, 15, 16, 12, 10, 8, 5, 2, 2]
           this.generateChartDrivenDistance2()
         })
       },
@@ -333,10 +325,8 @@
           this.drivenDistance3.seriesPercentData = res.data.data.yPropDataList
         })
         .finally(()=>{
-          if(this.drivenDistance3.seriesNumData.length==0){
-            this.drivenDistance3.seriesNumData = [20, 100, 380, 410, 820, 630, 700, 600, 60, 370, 300, 10, 140]
-            this.drivenDistance3.seriesPercentData = [1, 2, 6, 6, 12, 9, 10, 9, 1, 5, 4, 1, 4]
-          }
+          // this.drivenDistance3.seriesNumData = [20, 100, 380, 410, 820, 630, 700, 600, 60, 370, 300, 10, 140]
+          // this.drivenDistance3.seriesPercentData = [1, 2, 6, 6, 12, 9, 10, 9, 1, 5, 4, 1, 4]
           this.generateChartDrivenDistance3()
         })
       },
@@ -395,10 +385,8 @@
           this.drivenDistance4.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance4.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance4.seriesNumData.length==0){
-            this.drivenDistance4.seriesNumData = [230, 30, 420, 30, 640, 580, 830, 410, 200, 20]
-            this.drivenDistance4.seriesPercentData = [5, 1, 8, 1, 13, 12, 18, 8, 4, 1]
-          }
+          // this.drivenDistance4.seriesNumData = [230, 30, 420, 30, 640, 580, 830, 410, 200, 20]
+          // this.drivenDistance4.seriesPercentData = [5, 1, 8, 1, 13, 12, 18, 8, 4, 1]
           this.generateChartDrivenDistance4()
         })
       },
@@ -457,10 +445,8 @@
           this.drivenDistance5.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance5.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance5.seriesNumData.length==0){
-            this.drivenDistance5.seriesNumData = [90,70,100,40,90,700,900,600,740,140,190,120,390,400,420,400,420,80,100,70]
-            this.drivenDistance5.seriesPercentData = [1,1,1,1,1,7,9,6,7,1,2,1,4,4,4,4,4,1,1,1]
-          }
+          // this.drivenDistance5.seriesNumData = [90,70,100,40,90,700,900,600,740,140,190,120,390,400,420,400,420,80,100,70]
+          // this.drivenDistance5.seriesPercentData = [1,1,1,1,1,7,9,6,7,1,2,1,4,4,4,4,4,1,1,1]
           this.generateChartDrivenDistance5()
         })
       },
@@ -494,17 +480,17 @@
                 position: 'top',
                 formatter:this.viewType?'{c}%':'{c}'
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  opacity: 0.3,
-                  color:'#3893F9',
-                },
-                data: [
-                  [{xAxis:'100'},{xAxis:'200'}],
-                  [{xAxis:'275'},{xAxis:'400'}]
-                ]
-              },
+              // markArea: {
+              //   silent: true,
+              //   itemStyle: {
+              //     opacity: 0.3,
+              //     color:'#3893F9',
+              //   },
+              //   data: [
+              //     [{xAxis:'100'},{xAxis:'200'}],
+              //     [{xAxis:'275'},{xAxis:'400'}]
+              //   ]
+              // },
             }
         ]
         myChart.setOption(chartOption);
@@ -522,16 +508,14 @@
           this.drivenDistance6.seriesPercentData3 = res.data.data.yFourthPropDataList
           this.drivenDistance6.seriesPercentData4 = res.data.data.yTwelfthPropDataList
         }).finally(()=>{
-          if(this.drivenDistance6.seriesNumData1.length==0){
-            this.drivenDistance6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
-            this.drivenDistance6.seriesNumData2 = [1, 10, 180, 410, 450, 520, 440, 380, 190, 180, 120, 80, 50]
-            this.drivenDistance6.seriesNumData3 = [2, 40, 180, 310, 350, 410, 540, 480, 230, 160, 90, 60, 30]
-            this.drivenDistance6.seriesNumData4 = [3, 50, 100, 210, 310, 480, 640, 580, 300, 100, 60, 40, 10]
-            this.drivenDistance6.seriesPercentData1 = [0, 1, 2, 5, 9, 12, 14, 18, 16, 12, 10, 4, 1]
-            this.drivenDistance6.seriesPercentData2 = [0, 1, 3, 6, 8, 14, 16, 20, 17, 13, 9, 1, 1]
-            this.drivenDistance6.seriesPercentData3 = [1, 2, 4, 8, 12, 16, 19, 23, 20, 16, 10, 1, 1]
-            this.drivenDistance6.seriesPercentData4 = [1, 2, 5, 10, 14, 20, 15, 14, 12, 8, 5, 1, 1]
-          }
+          // this.drivenDistance6.seriesNumData1 = [0, 20, 280, 480, 550, 580, 340, 280, 180, 260, 160, 130, 120]
+          // this.drivenDistance6.seriesNumData2 = [1, 10, 180, 410, 450, 520, 440, 380, 190, 180, 120, 80, 50]
+          // this.drivenDistance6.seriesNumData3 = [2, 40, 180, 310, 350, 410, 540, 480, 230, 160, 90, 60, 30]
+          // this.drivenDistance6.seriesNumData4 = [3, 50, 100, 210, 310, 480, 640, 580, 300, 100, 60, 40, 10]
+          // this.drivenDistance6.seriesPercentData1 = [0, 1, 2, 5, 9, 12, 14, 18, 16, 12, 10, 4, 1]
+          // this.drivenDistance6.seriesPercentData2 = [0, 1, 3, 6, 8, 14, 16, 20, 17, 13, 9, 1, 1]
+          // this.drivenDistance6.seriesPercentData3 = [1, 2, 4, 8, 12, 16, 19, 23, 20, 16, 10, 1, 1]
+          // this.drivenDistance6.seriesPercentData4 = [1, 2, 5, 10, 14, 20, 15, 14, 12, 8, 5, 1, 1]
           this.generateChartDrivenDistance6()
         })
       },
@@ -688,14 +672,12 @@
           this.drivenDistance7.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance7.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{
-          if(this.drivenDistance7.seriesNumData.length==0){
-            this.drivenDistance7.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60, 30]
-            this.drivenDistance7.seriesPercentData = [1,1,2,7,8,7,4,2,2,2,1,1]
-          }
+          // this.drivenDistance7.seriesNumData = [296, 420, 480, 510, 550, 410, 440, 380, 180, 60, 60, 30]
+          // this.drivenDistance7.seriesPercentData = [1,1,2,7,8,7,4,2,2,2,1,1]
           this.generateChartDrivenDistance7()
         })
       },
-      generateChartDrivenDistance7(empty){
+      generateChartDrivenDistance7(){
         var myChart = this.$echarts.init(this.$refs['chart-driven-distance-7']);
         // 绘制图表
         let chartOption = this.deepClone(this.chartOption)

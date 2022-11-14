@@ -54,7 +54,7 @@
       </el-form-item>  
     </el-form>
     <div class="button-box">
-        <el-button type="primary" @click="generateEchart">查询</el-button>
+        <el-button type="primary" @click="generateEchart" :loading="isLoading">查询</el-button>
         <el-button type="default" >重置</el-button>
     </div>
   </div>
@@ -119,7 +119,7 @@ export default {
       ]
     };
   },
-  props:['activeName'],
+  props:['activeName','isLoading'],
   watch:{
     "formData.brand":{
       handler(newVal){
@@ -179,17 +179,4 @@ export default {
 </script>
 
 <style lang="less">
-  .small-select{
-    width: 120px;
-    margin-right: 4px;
-  }
-  .middle-select{
-    width: 159px;
-  }
-  .middle-date{
-    width: 224px;
-  }
-  .el-date-editor--monthrange.el-input, .el-date-editor--monthrange.el-input__inner{
-    width: 100%;
-  }
 </style>
