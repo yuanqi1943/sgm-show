@@ -1,9 +1,9 @@
 import request from './axios'
 
 //获取平均里程分配
-export function getAverageMileageDistribution(query) {
+export function selectAverageMileageDistribution(query) {
   return request({
-    url: '/sgm/api/drive/getAverageMileageDistribution',
+    url: '/sgm/api/drive/selectAverageMileageDistribution',
     method: 'get',
     params: query
   })

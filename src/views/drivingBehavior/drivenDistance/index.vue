@@ -50,7 +50,7 @@
 
 <script>
   import ChartsCard from '@/components/chartsCard.vue'
-  import {getAverageMileageDistribution, selectAverageDailyMileage, selectDailyAccumulatedMileage, 
+  import {selectAverageMileageDistribution, selectAverageDailyMileage, selectDailyAccumulatedMileage, 
   selectMonthlyAccumulatedMileage, selectSingleChargeMileage, selectAnnualMaximumMileage, selectResidenceAndFarthestChargingDistance} from '@/api/drivingBehavior'
   export default {
     name: 'drivenDistance',
@@ -229,7 +229,7 @@
 
       //次均行驶里程
       getDrivenDistanceData1(){
-        getAverageMileageDistribution(this.formDataParams).then((res)=>{
+        selectAverageMileageDistribution(this.formDataParams).then((res)=>{
           this.drivenDistance1.seriesNumData = res.data.data.yValueDataList
           this.drivenDistance1.seriesPercentData = res.data.data.yPropDataList
         }).finally(()=>{

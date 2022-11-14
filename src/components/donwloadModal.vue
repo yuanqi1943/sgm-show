@@ -22,7 +22,7 @@ export default {
             isIndeterminate: false,
             chartList:{
                 drivenDistance:[
-                    {name:'次均行驶里程分布',value:'getAverageMileageDistribution'},
+                    {name:'次均行驶里程分布',value:'selectAverageMileageDistribution'},
                     {name:'日均行驶里程分布',value:'selectAverageDailyMileage'},
                     {name:'日累计行驶里程分布',value:'selectDailyAccumulatedMileage'},
                     {name:'月累计行驶里程分布',value:'selectMonthlyAccumulatedMileage'},
